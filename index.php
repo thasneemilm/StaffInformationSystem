@@ -293,4 +293,4 @@ require_once BASEPATH.'core/CodeIgniter.php';
 
 
 
-define('EXT', '.php');
+

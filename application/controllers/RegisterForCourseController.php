@@ -2,23 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-
-class MY_Controller extends CI_Controller
-{
-    function __construct()
-    {
-        parent::__construct();
-        // do some stuff
-    }
-}
-
-
-
-
-
-
-
-
 class RegisterForCourseController extends MY_Controller {
 	 
 	  function __construct() {
@@ -33,7 +16,7 @@ class RegisterForCourseController extends MY_Controller {
 	public function index()
 	
 	{
-		
+		//$this->session->set_flashdata('msg', 'Category added');
 		$data['courses'] = $this->coursemodel-> getAllCourses();
 		$this->load->view('header');	
 		$this->load->view('RegisterForCourse',$data);   
@@ -51,6 +34,7 @@ class RegisterForCourseController extends MY_Controller {
          'courseid' => $courseid,
     );
 		$this->coursemodel->registerForCourse($array);
+		$this->session->set_flashdata('msg', 'Category added');
 		redirect('RegisterStudentController');
 	}
 	
