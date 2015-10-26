@@ -56,4 +56,6 @@ $route['jquery'] = "jquery/index";
 $route['subscriber'] = "subscriber";
 $route['Student/datatable'] = "Student/datatable";
 
-$route['RegisterForCourse'] = 'RegisterForCourseController';
+$route['welcome'] = 'Welcome';
+$route['Posts'] = 'Posts';
+

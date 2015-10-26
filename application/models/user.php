@@ -1,6 +1,11 @@
 <?php
 Class User extends CI_Model
 {
+
+public function __construct() {        
+    parent::__construct();
+}
+	
  function login($username, $password)
  {
    $this -> db -> select('username, password');
@@ -34,7 +39,15 @@ Class User extends CI_Model
 	}
  
  
- 
+ public function get_all_details_by_id($id){
+		
+		 return $this->db->select('id,image', false)
+		 ->from('users')
+         ->where(array('id' => $id))
+         ->get()->result();
+	
+		 
+	}
  
  
  

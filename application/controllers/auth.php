@@ -12,11 +12,18 @@ class Auth extends MY_Controller {
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
 		$this->lang->load('auth');
+		$this -> load -> model('menu_model');
 	}
 
 	// redirect if needed, otherwise display the user list
-  function index()
+	function index()
 	{
+		
+		//$this -> load -> model('menu_model');
+		//$menus = $this -> menu_model -> menus();
+	//	$data = array('menus' => '$menus');
+	   // $data = array('menus' => 'menus');
+		 
 
 		if (!$this->ion_auth->logged_in())
 		{
@@ -26,24 +33,46 @@ class Auth extends MY_Controller {
 		elseif (!$this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
 		{
 			// redirect them to the home page because they must be an administrator to view this
-			//return show_error('You must be an administrator to view this page.');
-			redirect('auth/loginUser', 'refresh');
+			return show_error('You must be an administrator to view this page.');
+			
 		}
 		else
 		{
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
+            
+		//$userId = $this->ion_auth->user()->row()->id;
+		//$menu = 	$this -> menu_model -> menus();
+	//	$this -> menu_model -> getParentMenuList();
+			
+		//	$data = array(
+        //        'menus' => $menu
+               
+        //    );
+			
+			// print_r($lastitem); 
+			 
 			//list the users
-			$this->data['users'] = $this->ion_auth->users()->result();
-			foreach ($this->data['users'] as $k => $user)
-			{
-				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-			}
-
-			//$this->_render_page('auth/welcome', $this->data);
-		   $data = array('content'=>'auth/welcome');
-           $this->load->view('masterView',$data);
+		//	$this->data['users'] = $this->ion_auth->users()->result();
+		//	foreach ($this->data['users'] as $k => $user)
+		//	{
+		//		$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+		//	}
+          //  $use_id = $this->session->userdata('user_id');
+         //   $this->data['user'] = $this->ion_auth->user($use_id)->row();
+		//	$newdata = array(
+       	//	 'avatar'  => $user->last_name,
+       	//	 
+		//	);
+		//	$this->session->set_userdata($newdata);
+			//$this->_render_page('auth/index', $this->data);
+			$this->loadView('welcome_user');
+			//$this->loadView('test');
+			
+	//$this->load->model('menu_model');
+   // $menus = $this->menu_model->menus();
+   // $data = array('menus' => $menus);
+   // $this->load->view('test', $data);
 		}
 	}
 
@@ -121,18 +150,11 @@ class Auth extends MY_Controller {
 		{
 			redirect('auth/login', 'refresh');
 		}
-        
-		if (!$this->ion_auth->is_admin())
-		{
-			redirect('auth/change_password_user', 'refresh');
-		}
-		
+
 		$user = $this->ion_auth->user()->row();
 
 		if ($this->form_validation->run() == false)
 		{
-			
-			$this->data = array('content'=>'auth/change_password');
 			// display the form
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -162,8 +184,8 @@ class Auth extends MY_Controller {
 				'value' => $user->id,
 			);
 
-			
-			$this->_render_page('masterView', $this->data);
+			// render
+			$this->_render_page('auth/change_password', $this->data);
 		}
 		else
 		{
@@ -188,7 +210,6 @@ class Auth extends MY_Controller {
 	// forgot password
 	function forgot_password()
 	{
-		 //  $this->data = array('content'=>'auth/forgot_password');
 		// setting validation rules by checking wheather identity is username or email
 		if($this->config->item('identity', 'ion_auth') != 'email' )
 		{
@@ -202,9 +223,6 @@ class Auth extends MY_Controller {
 
 		if ($this->form_validation->run() == false)
 		{
-			
-			
-			
 			// setup the input
 			$this->data['email'] = array('name' => 'email',
 				'id' => 'email',
@@ -424,12 +442,11 @@ class Auth extends MY_Controller {
 
 	// create a new user
 	function create_user()
-    {   
-        $this->data = array('content'=>'auth/create_user');	
+    {
         $this->data['title'] = "Create User";
 
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-        {   $this->session->set_flashdata('message',"<div style='color:green;'> YOU MUST BE ADMIN .<div>");
+        {
             redirect('auth', 'refresh');
         }
 
@@ -529,14 +546,15 @@ class Auth extends MY_Controller {
                 'type'  => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
-            
-            $this->_render_page('masterView', $this->data);
+
+           // $this->_render_page('auth/create_user', $this->data);
+           $this->loadView('user_create');
         }
     }
 
 	// edit a user
 	function edit_user($id)
-	{   $this->data = array('content'=>'auth/edit_user');	
+	{
 		$this->data['title'] = "Edit User";
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
@@ -681,8 +699,9 @@ class Auth extends MY_Controller {
 			'id'   => 'password_confirm',
 			'type' => 'password'
 		);
-
-		$this->_render_page('/masterView', $this->data);
+        
+		$this->loadView('user_edit',$this->data);
+		//$this->_render_page('auth/edit_user', $this->data);
 	}
 
 	// create a new group
@@ -727,8 +746,9 @@ class Auth extends MY_Controller {
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('description'),
 			);
-
-			$this->_render_page('auth/create_group', $this->data);
+            
+			$this->loadView('user_create_group');
+			//$this->_render_page('auth/create_group', $this->data);
 		}
 	}
 
@@ -830,167 +850,5 @@ class Auth extends MY_Controller {
 
 		if ($returnhtml) return $view_html;//This will return html on 3rd argument being true
 	}
-	
-	public function listusers()
-	{
-		$this->data = array('content'=>'auth/index');
-		
-		if (!$this->ion_auth->logged_in())
-		{
-			// redirect them to the login page
-			redirect('auth/login', 'refresh');
-		}
-		elseif (!$this->ion_auth->is_admin()) // remove this elseif if you want to enable this for non-admins
-		{
-			// redirect them to the home page because they must be an administrator to view this
-			 redirect('auth', 'refresh');
-		//	return show_error('You must be an administrator to view this page.');
-		}
-		else
-		{
-			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			//list the users
-			$this->data['users'] = $this->ion_auth->users()->result();
-			foreach ($this->data['users'] as $k => $user)
-			{
-				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-			}
-
-			//$this->_render_page('auth/welcome', $this->data);
-			
-           $this->_render_page('masterView', $this->data);
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  *****************************************************************************************************************************
-// **************************   For Non admin Users od the syatem
-
-public function loginUser()
-{
-
-		if (!$this->ion_auth->logged_in())
-		{
-			// redirect them to the login page
-			redirect('auth/login', 'refresh');
-		}else
-		{
-			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			//list the users
-			
-			//$this->_render_page('auth/welcome', $this->data);
-		   $this->data = array('content'=>'auth/welcome');
-           $this->load->view('masterView', $this->data);
-		}
-	
-}
-
-
-function change_password_user()
-	{
-		$this->data = array('content'=>'auth/change_password');
-	
-		$this->form_validation->set_rules('old', $this->lang->line('change_password_validation_old_password_label'), 'required');
-		$this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
-		$this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
-
-		if (!$this->ion_auth->logged_in())
-		{
-			redirect('auth/login', 'refresh');
-		}
-
-		$user = $this->ion_auth->user()->row();
-
-		if ($this->form_validation->run() == false)
-		{
-			
-			$this->data = array('content'=>'auth/change_password');
-			// display the form
-			// set the flash data error message if there is one
-			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-			$this->data['min_password_length'] = $this->config->item('min_password_length', 'ion_auth');
-			$this->data['old_password'] = array(
-				'name' => 'old',
-				'id'   => 'old',
-				'type' => 'password',
-			);
-			$this->data['new_password'] = array(
-				'name'    => 'new',
-				'id'      => 'new',
-				'type'    => 'password',
-				'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
-			);
-			$this->data['new_password_confirm'] = array(
-				'name'    => 'new_confirm',
-				'id'      => 'new_confirm',
-				'type'    => 'password',
-				'pattern' => '^.{'.$this->data['min_password_length'].'}.*$',
-			);
-			$this->data['user_id'] = array(
-				'name'  => 'user_id',
-				'id'    => 'user_id',
-				'type'  => 'hidden',
-				'value' => $user->id,
-			);
-
-			
-			//$this->_render_page('master', $this->data);
-		 //  $this->data = array('content'=>'auth/users/change_password');
-           $this->load->view('masterView', $this->data);
-		}
-		else
-		{
-			$identity = $this->session->userdata('identity');
-
-			$change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
-
-			if ($change)
-			{
-				//if the password was successfully changed
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				$this->logout();
-			}
-			else
-			{
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
-				redirect('auth/change_password_user', 'refresh');
-			}
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
