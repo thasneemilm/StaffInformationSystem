@@ -4,7 +4,7 @@
 <script>
 	$(document).ready(function(){
 		$("#search").keyup(function(){
-		if($("#search").val().length>3){
+		if($("#search").val().length>1){
 		$.ajax({
 			type: "post",
 			url: "http://localhost/CodeIgniter3Tests/index.php/Posts/ajaxPaginationData2",

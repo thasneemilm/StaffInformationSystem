@@ -6,17 +6,19 @@
 		
 		   function __construct() {
 			parent::__construct();
+			if (!$this->ion_auth->logged_in())
+			{
+				// redirect them to the login page
+				redirect('auth/login', 'refresh');
+			}
+			$this->load->library('Ajax_pagination');
 			$this->load->database();
 			$this->load->library("pagination");
 			$this -> load -> model('StudentModel');
 			$this -> load -> model('CourseModel');
 			$this->load->helper(array('form','url','html'));
 			$this->load->library(array('session', 'form_validation', 'email'));
-			if (!$this->ion_auth->logged_in())
-			{
-				// redirect them to the login page
-				redirect('auth/login', 'refresh');
-			}
+			$this->perPage = 7;
 		}
 		
 		
@@ -25,8 +27,9 @@
 		$this->loadView('student_view');		
 		}
 		
-		// search students
-		public function search_student()
+		
+		
+/* 		public function search_student2()
 		{
 			
 		$config = array();
@@ -80,7 +83,11 @@
         $config['prev_tag_close'] = '</div>';
         $this -> pagination -> initialize($config);
         return $this -> pagination -> create_links();
-		}
+		} 
+		
+		
+		
+*/
 		
 		public function registerStudent()
 		{   //$this->form_validation->set_rules('registernumber', 'Register Number', '|required|min_length[5]|max_length[20]|numeric', array('numeric' => 'Insert A numeric vlaue'));
@@ -227,13 +234,101 @@
 	}
 	
 	
-	
+/* 	
 	public function ajax_search()
 	{
 		$search=  $this->input->post('search');
 		$query = $this->StudentModel->getStudentAjax($search);
 		echo json_encode ($query);
 	}
+	
+ */	
+ 
+ 
+ 
+	public function search_student()
+    {
+	
+        $totalRec = count($this->StudentModel->getRows());
+        
+        //pagination configuration
+        $config['first_link']  = 'First';
+        $config['div']         = 'postList'; //parent div tag id
+        $config['base_url']    = base_url().'index.php/Student/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $this->data['students'] = $this->StudentModel->getRows(array('limit'=>$this->perPage));
+		//print_r($this->data['students']);
+        
+        //load the view
+        $this->loadView('student_search', $this->data);
+    }
+    
+	
+	
+    function ajaxPaginationData()
+    {
+        $page=  $this->input->post('page');
+       // if(!$page){
+       //     $offset = 0;
+       // }else{
+            $offset = $page;
+      //  }
+        
+        //total rows count
+        $totalRec = count($this->StudentModel->getRows());
+        
+        //pagination configuration
+        $config['first_link']  = 'First';
+       // $config['div']         = 'postList'; //parent div tag id
+        $config['base_url']    = base_url().'index.php/student/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['students'] = $this->StudentModel->getRows(array('start'=>$offset,'limit'=>$this->perPage));
+        
+        //load the view
+        $this->load->view('ajax-pagination-data', $data, false);
+    }
+	
+	
+	
+	function ajaxGetStudentSearch()
+    {
+       $search=  $this->input->post('search');
+       // if(!$page){
+       //     $offset = 0;
+       // }else{
+       //     $offset = $page;
+      //  }
+        
+        //total rows count
+        $totalRec = count($this->StudentModel->getRows());
+        
+        //pagination configuration
+        $config['first_link']  = 'First';
+       // $config['div']         = 'postList'; //parent div tag id
+        $config['base_url']    = base_url().'index.php/Student/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['students'] = $this->StudentModel->getStudent($search);
+        
+        //load the view
+        $this->load->view('ajax-pagination-data', $data, false);
+    }
+	
+	
 	
 	
 	

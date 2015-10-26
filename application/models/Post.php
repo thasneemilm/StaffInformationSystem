@@ -41,6 +41,8 @@
 	    $this->db->like($whereCondition);
 		$this->db->or_like('phonenumber',$search);
 		$this->db->or_like('parentname',$search);
+		$this->db->limit(10);
+		$this->db->order_by("name", "asc");
         $query = $this->db->get();
         
         //return ($query->num_rows() > 0)?$query->result_array():FALSE;

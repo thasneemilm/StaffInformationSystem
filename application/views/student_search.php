@@ -1,6 +1,41 @@
-
-  
-            	
+     
+<script type="text/javascript" language="javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/jquery.js"></script>
+<script type="text/javascript" src="http://www.technicalkeeda.com/js/javascripts/plugin/json2.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#search").keyup(function(){
+		if($("#search").val().length>1){
+		$.ajax({
+			type: "post",
+			url: "http://localhost/CodeIgniter3Tests/index.php/Student/ajaxGetStudentSearch",
+			cache: false,				
+			data:'search='+$("#search").val(),
+			success: function(response){
+				$('#postList').html(response);
+				var obj = JSON.parse(response);
+				if(obj.length>0){
+					try{
+						
+					}catch(e) {		
+						alert('Exception while request..');
+						}		
+				}else{
+					$('#finalResult').html($('<li/>').text("No Data Found"));		
+				}		
+				
+			},
+			error: function(){						
+				alert('Error while request..');
+			}
+		});
+		}
+		return false;
+	  });
+	});
+</script>
+	 
+	 
+	 
  <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -40,12 +75,12 @@
           <div class="box">
                 <div class="box-header">
                   
-					<?php echo $links; ?> 
+					 <?php echo $this->ajax_pagination->create_links(); ?>
 				
                   <div class="box-tools">
 				  
                     <div class="input-group" style="width: 300px;">
-                      <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
+                      <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search" name="search" id="search">
                       <div class="input-group-btn">
                         <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                       </div>
@@ -53,7 +88,7 @@
                   </div>
                 </div><!-- /.box-header -->
                 <div class="box-body  no-padding">
-                  <table class="table table-striped">
+                  <table class="table table-striped"id="postList" class="list">
                     <tr>
                       <th>Register Number</th>
                       <th>Name</th>
@@ -62,6 +97,7 @@
 					  <th>Address</th>
 					   <th>Actions</th>
                     </tr>
+					<div >  
 					
 					<!--?php foreach($this->data['students'] as $student): ?-->
 					<?php foreach($students as $student): ?>
@@ -75,6 +111,8 @@
                     </tr>
                     <?php endforeach; ?>
 					
+					
+					</div>
                   </table>
 				  
                 </div><!-- /.box-body -->
