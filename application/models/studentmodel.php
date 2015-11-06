@@ -9,14 +9,35 @@ class studentmodel extends CI_Model {
 	}
 
 	public function addnewStudents($data) {
-		$this -> db -> insert('students', $data);
+		/* $this -> db -> insert('students', $data);
+		echo $this -> db -> affected_rows();
 		if ($this -> db -> affected_rows() > 0) {
 			// Code here after successful insert
 			return TRUE;
 			// to the controller
 		} else {
 			return FALSE;
-		}
+		} */
+		
+		
+		if($this->db->insert('students', $data))
+			{
+			//echo $insert_id = $this->db->insert_id();	// Code here after successful insert
+			return insert_id;   // to the controller
+			}
+		else {
+		echo$this->db->_error_message();
+			//return FALSE;
+			}
+		
+		
+		
+		
+		
+	 	
+		
+		
+		
 	}
 
 	public function getAllClassTypes() {
@@ -188,6 +209,90 @@ class studentmodel extends CI_Model {
 		
 		
     }
+	
+	
+	function getStudentForPayment($search)
+    {
+        $this->db->select('*');
+        $this->db->from($this->postTable);
+        
+       // $whereCondition = array('name' =>$search);
+	   // $this->db->like($whereCondition);
+		$this->db->or_like('name',$search);
+		//$this->db->or_like('parentname',$search);
+		$this->db->limit(5);
+		$this->db->order_by("name", "asc");
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+   
+    public function getSingleStudent($id = null) {
+    $this->db->select()->from('students');
+ 
+    // where condition if id is present
+    if ($id != null) {
+      $this->db->where('id', $id);
+    }
+    else {
+      $this->db->order_by('id');
+    }
+ 
+    $query = $this->db->get();
+ 
+    if ($id != null) {
+      return $query->row_array(); // single row
+    }
+    else {
+      return $query->result_array(); // array of result
+    }
+  }
+   
+   public function getSingleStudent2($id = null) {
+     $this->db->where('id', $id);
+     return $this->db->get('students');
+  }
+   
+  public  function update($id, $student){
+        $this->db->where('id', $id);
+        $x = $this->db->update('students', $student);
+		if($x == false)
+			throw new Exception("Database Error");
+	}
+   
+   
+    public function remove($id) {
+    $this->db->where('id', $id);
+    $this->db->delete('students');
+  }
+ 
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    

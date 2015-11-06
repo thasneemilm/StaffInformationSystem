@@ -24,7 +24,11 @@
 		
 		public function index()
 		{
-		$this->loadView('student_view');		
+		
+		
+		$this->data['registernumber'] = $this->StudentModel->getNextRegisterNumber();	
+		
+		$this->loadView('student_add', $this->data);		
 		}
 		
 		
@@ -90,41 +94,60 @@
 */
 		
 		public function registerStudent()
-		{   //$this->form_validation->set_rules('registernumber', 'Register Number', '|required|min_length[5]|max_length[20]|numeric', array('numeric' => 'Insert A numeric vlaue'));
-			//$this->form_validation->set_rules('studentname', 'Student Name', 'trim|required|min_length[5]|max_length[20]|xss_clean|alpha');
-			//$this->form_validation->set_rules('phonenumber', 'Phone Number', '|required|min_length[5]|max_length[20]|numeric');
+		{   
+		   $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		//$this->form_validation->set_rules('registernumber', 'Register Number', '|required|min_length[5]|max_length[20]|numeric', array('numeric' => 'Insert A numeric vlaue'));
+			$this->form_validation->set_rules('studentname', 'Student Name', 'trim|required|min_length[5]|max_length[20]|alpha');
+			$this->form_validation->set_rules('parentname', 'Parent Name', 'trim|required|min_length[5]|max_length[20]|alpha');
+			$this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[5]|max_length[20]|alpha');
+			$this->form_validation->set_rules('phonenumber', 'Phone Number', 'numeric|required|min_length[10]|max_length[10]');
 			
 			//$this->StudentModel->getNextRegisterNumber();
 			
 			
-			//$registernumber = $this->StudentModel->getNextRegisterNumber();	
-			$registernumber = $this->input->post('registernumber');
+			 if ($this->form_validation->run() == FALSE) {
+				$this->data['registernumber'] = $this->StudentModel->getNextRegisterNumber();	
+				 $this->loadView('student_add', $this->data);
+			} 
+			
+			else {
+			
+			$registernumber = $this->StudentModel->getNextRegisterNumber();	
+			//$registernumber = $this->input->post('registernumber');
 			$studentname = $this->input->post('studentname');
 			$parentname = $this->input->post('parentname');
 			$address = $this->input->post('address');
 			$phonenumber = $this->input->post('phonenumber');
 			//$$classeType = $this->input->post('$classeType');
 			
-			$data = array(
-			'id'  =>  $registernumber,
+			$data2 = array(
+			//'id'  =>  $registernumber,
 			'name'   =>  $studentname,
 			'parentname'   =>  $parentname,
 			'address'   =>  $address,
 			'phonenumber'   =>  $phonenumber
 			// 'classeType'   =>  $$classeType
 			);
-			if($this->StudentModel->addnewStudents($data)==TRUE){
-				$this->session->set_flashdata('flashSuccess', 'Student Registration Success');
-				redirect('Student' );
-				}else {
-				//echo $this->StudentModel->addnewStudents($data);
-				$this->session->set_flashdata('flashDanger','Student Registration Fail');
+					if($this->StudentModel->addnewStudents($data2)!=null){
+						$this->session->set_flashdata('flashSuccess', 'Student Registration Success');
+						redirect('Student' );
+					}else{
+						//echo $this->StudentModel->addnewStudents($data);
+						$this->session->set_flashdata('flashDanger','Student Registration Fail');
+					}
+			
 			}
 			
 			
 			
 			
+			
+			
 		}
+		
+		
+		
+		
 		
 		public function getStudentByName()
 		{
@@ -331,16 +354,102 @@
 	
 	
 	
+	function ajaxGetStudentSearchForPayment()
+    {
+		$search=  $this->input->post('search');
+        //$totalRec = count($this->StudentModel->getRows());
+		/* if($students = $this->StudentModel->getStudentForPayment($search)){
+			header('Content-type : application/jason');
+			  echo json_encode($students);
+			} else{
+			$data = false;
+			} */
+        $data['student'] = $this->StudentModel->getStudentForPayment($search);
+		//$this->output->set_header('Content-Type: application/json; charset=utf-8');
+		echo json_encode($data);
+		
+		
+        
+    }
+	
+
+	
+	public    function edit($id){
+       
+        $this->data['student'] = $this->StudentModel->getSingleStudent2($id)->row();
+        $this->loadView('student_view', $this->data);
+    }
+	
+	
+	public function update(){
+	
+	        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		//$this->form_validation->set_rules('registernumber', 'Register Number', '|required|min_length[5]|max_length[20]|numeric', array('numeric' => 'Insert A numeric vlaue'));
+			$this->form_validation->set_rules('studentname', 'Student Name', 'trim|required|min_length[5]|max_length[20]|alpha');
+			$this->form_validation->set_rules('parentname', 'Parent Name', 'trim|required|min_length[5]|max_length[20]|alpha');
+			$this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[5]|max_length[20]|alpha');
+			$this->form_validation->set_rules('phonenumber', 'Phone Number', 'numeric|required|min_length[10]|max_length[10]');
+			
+			//$this->StudentModel->getNextRegisterNumber();
+			
+			
+			// if ($this->form_validation->run() == FALSE) {
+			//	$id = $this->input->post('id');
+			//   $this->data['student'] = $this->StudentModel->getSingleStudent2($id)->row();
+				//$this->data['registernumber'] = $this->StudentModel->getNextRegisterNumber();
+				 //$this->data['student'] = $this->StudentModel->getSingleStudent2($id)->row();
+			//	 $this->loadView('student_view', $this->data);
+			//} else {
+			
+			
+			try {
+				
+				$id = $this->input->post('id');
+				//echo $id;
+				$student = array(
+				'name' => $this->input->post('name'),
+				'parentname' => $this->input->post('parentname'),
+					'address' => $this->input->post('address'),
+				'phonenumber' => $this->input->post('phonenumber')
+				);
+				$this->StudentModel->update($id,$student);
+			
+				redirect('Student/search_student');
+				
+				} catch (Exception $e) {
+				//alert the user then kill the process
+					var_dump($e->getMessage());
+				}
+			
+			
+			
+				
+		//	}
+			
+			
+			
+	
+			
+		}
 	
 	
 	
+	 public function remove(){
+	        $id = $this->uri->segment(3);
+			//$id = $this->input->post('id');
+			
+            $this->StudentModel->remove($id);
+			
+			redirect('Student/search_student');
+		} 
 	
-	
-	
-	
-	
-	
-	
+	public function removeAjax($id){
+	    
+	    $this->StudentModel->remove($id);
+        if($this->StudentModel->remove($id))
+	    redirect('Student/search_student')  ;   
+  
+		}
 	
 	
 	

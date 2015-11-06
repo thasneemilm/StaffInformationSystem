@@ -178,6 +178,11 @@
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->
+   <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>  
+   
+   <!--script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js" type="text/javascript"></script--> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0//plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0//bootstrap/js/bootstrap.min.js"></script>
@@ -189,5 +194,7 @@
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0//dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0//dist/js/demo.js"></script>
+	
+	
   </body>
 </html>

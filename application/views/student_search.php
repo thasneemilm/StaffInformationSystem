@@ -33,6 +33,24 @@
 	  });
 	});
 </script>
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+	
+        $(".deleteUse").click(function(e){
+		alert('Are you Sure to deliver this? ');
+		 $this  = $(this);
+            e.preventDefault();
+            var url = $(this).attr("href");
+			alert(url);
+            $.get(url, function(r){
+                if(r.success){
+                    $this.closest("tr").remove();
+                }
+            })
+        });
+    });
+</script>
 	 
 	 
 	 
@@ -54,7 +72,7 @@
   <div class="col-md-12">
           <!-- Default box -->
           <div class="box">
-            <div class="box-header with-border">
+		<div class="box-header with-border">
               <h3 class="box-title">Student Details</h3>
               <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
@@ -99,6 +117,9 @@
                     </tr>
 					<div >  
 					
+					
+					
+					
 					<!--?php foreach($this->data['students'] as $student): ?-->
 					<?php foreach($students as $student): ?>
                     <tr>
@@ -107,15 +128,31 @@
                        <td><?php echo $student->parentname; ?></td>
                       <td><?php echo $student->phonenumber; ?></td>
 					   <td><?php echo $student->address; ?></td>
-                      <td>Bacon </td>
+                       <td > <div class="btn-group">
+                      <button type="button" class="btn btn-info">Action</button>
+                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo site_url('Student/edit') . '/' . $student -> id; ?>">Edit</a></li>
+                        <li><a class='deleteUser' href="<?php echo site_url('Student/remove') . '/' . $student -> id; ?>">Delete</a></li>
+                        <li><a  href="<?php echo site_url('Payments'); ?>">Do Payment</a></li>
+                      </ul>
+                    </div> </td>
                     </tr>
                     <?php endforeach; ?>
+				
+					
 					
 					
 					</div>
                   </table>
 				  
                 </div><!-- /.box-body -->
+				
+				
+				
               </div>
             	
             	

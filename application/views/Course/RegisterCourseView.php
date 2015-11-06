@@ -1,34 +1,65 @@
-<div class="row">
-	<div class="col-lg-12">
-		<h2 class="page-header">Register New Course</h2>
-	</div>
-	<!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
-<?php echo validation_errors(); ?>
 
-<h4><?php echo $this->session->flashdata('message'); ?></h4>
+  
+            	
+ <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Course
+            
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="<?php echo base_url();?>"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
+          </ol>
+        </section>
 
-<div class="container">
+        <!-- Main content -->
+        <section class="content">
+			<div class="col-md-8">
+          <!-- Default box -->
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Hi !</h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" title="Collapse"></button>
+                <button class="btn btn-box-tool" title="Remove"></button>
+              </div>
+            </div>
+            <div class="box-body">
 	
-	<div class="col-lg-8">
-	     <div class="panel panel-default">
+	
+
 	<?php $attributes = array("name" => "registerstudentform");
             echo form_open("Course/registerNewCourse")?>
      
-      <label >Name :</label>
-      <div class="form-group">
-				<input type="text" name="coursename" class="form-control" placeholder="Eg English" >    
-       </div>
+	  <div class="form-group">
+				<label>Name</label>      
+				<?php $data = array(
+          'name'        => 'coursename',
+          //'value'          => $course->coursename,
+          'class'       => 'form-control',
+          'placeholder' => 'Eg English'
+           
+          );
+     echo form_input($data);   ?> 
+      </div> 
+	 
+	 
+	  <div class="form-group">
+				<label>Name</label>      
+				<?php $data = array(
+          'name'        => 'description',
+          //'value'          => $course->coursename,
+          'class'       => 'form-control',
+          'placeholder' => 'Eg Test'
+           
+          );
+     echo form_input($data);   ?> 
+      </div> 
       
-      
-      
-      <label >Description :</label>
-      <div class="form-group">
-				<input type="text" name="description" class="form-control" placeholder="Eg Some thing" ">    
      
-      </div>
-      </div>
+     
       
       
        <div class="form-group">
@@ -40,16 +71,47 @@
              
     <?php echo form_close(); ?>
 
-	</div>
-</div>
+            </div><!-- /.box-body -->
+           
+          </div><!-- /.box -->
+  </div><!-- /.box -->
+        </section><!-- /.content -->
 
 
-
-<div class="col-lg-12">
-	<div class="col-lg-8">
-<table cellpadding=0 cellspacing=10  border="1"  class="table table-striped">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	 <section class="content">	
+  <div class="col-md-8">		
+ <div class="box">
+<div class="box-body  no-padding">
+  <table class="table table-striped"id="postList" class="list">
 	<tr>
-		<th><?php echo 'Course ID';?></th>
+		
 		<th><?php echo 'Course name';?></th>
 		<th><?php echo 'Course Description';?></th>
 		<th><?php echo 'Actions';?></th>
@@ -59,12 +121,22 @@
 	<?php if($courses!=null):?>
 	<?php foreach ($courses as $course):?>
 		<tr>
-            <td><?php echo $course->id;?></td>
+            
             <td><?php echo $course->name;?></td>
             <td><?php echo $course->description;?></td>
-			<td><?php echo anchor("Course/editCourse/".$course->id, 'Edit') ; echo " ";
-				echo anchor("Course/deleteCourse/".$course->id, 'Delete') ;?>
-				</td>
+			<td><div class="btn-group">
+                      <button type="button" class="btn btn-info">Action</button>
+                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+						  <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo site_url('Course/editCourse') . '/' . $course -> id; ?>">Edit</a></li>
+                        <li><a class='deleteUser' href="<?php echo site_url('Course/deleteCourse') . '/' . $course -> id; ?>">Delete</a></li>
+                       
+                      </ul>
+                    </div>
+			</td>
 		</tr>
 	<?php endforeach;?>
 	<?php  else: ?>
@@ -72,6 +144,9 @@
 	 <?php  endif; ?>
 </table>
 </div>
+</div>
+</div>
+</section>
 
 
 </div>

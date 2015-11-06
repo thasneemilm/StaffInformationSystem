@@ -1,10 +1,15 @@
+<script>
+	$("#alert alert-warning").fadeIn('slow').delay(5000).fadeOut('slow');
+	</script>
+ 
+ <style>
 
-  
+</style>
             	
  <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            YUpdate Students
+            Add New Students
             
           </h1>
           <ol class="breadcrumb">
@@ -38,47 +43,48 @@
       
       
             <?php $attributes = array("name" => "registerstudentform");
-            echo form_open("Student/update")?>
+            echo form_open("Student/registerStudent")?>
    
      <div class="form-group">
 				<label>Register Number</label>      
      <?php $data = array(
-          'name'        => 'id',
-           'value'          => $student->id,
+          'name'        => 'registernumber',
+         // 'value'          => $this->input->post('registernumber'),
+		  'value'          => $registernumber,
           'class'       => 'form-control',
           'style'       => 'height:30px',
           'placeholder' => 'Eg: 12345678',
-          'required' => 'required',
 		  'readonly'=>'readonly'
+         // 'required' => 'required'         
           
         );
-     echo form_input($data);   ?> 
-	
+     echo form_input($data); ?> 
+	 
       </div>
    
        <div class="form-group">
 				<label>Student Name</label>      
      <?php $data = array(
-          'name'        => 'name',
-           'value'      => $student->name,
+          'name'        => 'studentname',
+          'value'          => $this->input->post('studentname'),
           'class'       => 'form-control',
           'style'       => 'height:30px',
           'placeholder' => 'Eg: Thasneem ILM',
           'required' => 'required'
         );
      echo form_input($data);   ?> 
-	 <?php echo form_error('name'); ?>
+	 <?php echo form_error('studentname'); ?>
       </div>
      
       <div class="form-group">
 				<label>Parent Name</label>      
      <?php $data = array(
           'name'        => 'parentname',
-           'value'          => $student->parentname,
+          'value'          => $this->input->post('parentname'),
           'class'       => 'form-control',
           'style'       => 'height:30px',
           'placeholder' => 'Eg: Ibura Lebbe',
-           'required' => 'required'
+          'required' => 'required'
         );
      echo form_input($data);   ?> 
 	 <?php echo form_error('parentname'); ?>
@@ -89,10 +95,10 @@
 				<label>Address</label>      
      <?php $data = array(
           'name'        => 'address',
-          'value'          => $student->address,
+          'value'          => $this->input->post('address'),
           'class'       => 'form-control',
           'placeholder' => 'Eg: No 350, Hijra mawatha, kekunagolla',
-           'required' => 'required'
+		  'required' => 'required'
           );
      echo form_input($data);   ?> 
 	 <?php echo form_error('address'); ?>
@@ -102,7 +108,7 @@
 				<label>Phone Number</label>      
      <?php $data = array(
           'name'        => 'phonenumber',
-          'value'          => $student->phonenumber,
+          'value'          => $this->input->post('phonenumber'),
           'class'       => 'form-control',
           'style'       => 'height:30px',
           'placeholder' => 'Eg: 0711585515',

@@ -44,6 +44,15 @@ class CourseModel extends CI_Model {
 		return $result;
 	}
 
+	
+	 public function getSingleCourse($id = null) {
+	
+     $this->db->where('id', $id);
+	 return $this->db->get('course');
+	 }
+	
+	
+	
 	function updateCourse($id, $data) {
 		$this -> db -> where('id', $id);
 		$this -> db -> update('course', $data);

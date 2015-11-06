@@ -22,7 +22,8 @@ class Course extends MY_Controller {
 	{
 		$this->data = array('content'=>'Course/RegisterCourseView');
 		$this->data['courses'] = $this->CourseModel->getAllCourses();
-		$this->load->view('masterView', $this->data);
+		//$this->load->view('masterView', $this->data);
+		 $this->loadView('Course/RegisterCourseView', $this->data);
 		
 	}
 		
@@ -56,20 +57,22 @@ class Course extends MY_Controller {
    	    $this->data = array('content'=>'Course/CourseUpateView');
    	    $id = $this->uri->segment(3);
 		//echo $id;
-		$this->data['single_course'] = $this->CourseModel->getCourseById($id);	
+		$this->data['course'] = $this->CourseModel->getSingleCourse($id)->row();	
 		//echo $this->CourseModel->getCourseById($id);
         $this->data['courses'] = $this->CourseModel->getAllCourses();
-		$this->load->view('masterView', $this->data);
+		 $this->loadView('Course/CourseUpateView', $this->data);
+		//$this->load->view('masterView', $this->data);
    }
    
    
    public function updateCourse()
    {
     	$id= $this->input->post('id');
+		echo $id;
 		$data = array(
-		'name' => $this->input->post('coursename'),
-		'description'=> $this->input->post('description'),);
-		$this->CourseModel->updateCourse($id,$data);
+		'name' => $this->input->post('name'),
+		'description'=> $this->input->post('description'));
+		$this->CourseModel->updateCourse(4,$data);
 		redirect('Course');
    }
    
@@ -80,13 +83,6 @@ class Course extends MY_Controller {
 	}
    
    
-    public function searchCourse(){
-		$course=  $this->input->post('cousre');
-		$query = $this->CourseModel->getCourse($course);
-		header('Content-type : application/jason');
-			  echo json_encode($query);
-		//echo json_encode ($query);
-	}
    
    
    
