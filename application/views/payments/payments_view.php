@@ -80,7 +80,7 @@
     </head>
             	
  <!-- Content Header (Page header) -->
-        <section class="content-header">
+	<section class="content-header">
           <h1>
             Payments
             
@@ -90,89 +90,237 @@
             <li><a href="<?php echo base_url() ?>index.php/Payments">Payments</a></li>
             <li class="active">Do Payments</li>
           </ol>
-        </section>
+    </section>
 
         <!-- Main content -->
                <!-- Main content -->
-        <section class="content">
-			<div class="col-md-6">
+    <section class="content">
+		<div class="col-md-6">
           <!-- Default box -->
-          <div class="box">
-            <div class="box-header with-border">
-              <h3 class="box-title">Hi !</h3>
-              <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" title="Collapse"></button>
-                <button class="btn btn-box-tool" title="Remove"></button>
-              </div>
-            </div>
-            <div class="box-body">
+			<div class="box">
+					<div class="box-header with-border">
+					<h3 class="box-title">Hi !</h3>
+					<div class="box-tools pull-right">
+					<button class="btn btn-box-tool" title="Collapse"></button>
+					<button class="btn btn-box-tool" title="Remove"></button>
+					</div>
+					</div>
+				<div class="box-body">
             
-             <?php if ($this->session->flashdata('flashSuccess')) { ?>
-        <div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
-    <?php } ?>	
+					<?php if ($this->session->flashdata('flashSuccess')) { ?>
+						<div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
+						<?php } ?>	
       
-      <?php if ($this->session->flashdata('flashFail')) { ?>
-        <div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
-    <?php } ?>	
+					<?php if ($this->session->flashdata('flashFail')) { ?>
+					<div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
+					<?php } ?>	
       
       
-            <?php $attributes = array("name" => "registerstudentform");
-            echo form_open("Student/registerStudent")?>
+						<?php $attributes = array("name" => "registerstudentform");
+						echo form_open("Student/registerStudent")?>
    
      
 	 
 	 
-	 <div class="form-group">
-				<label>Student Name</label>      
-				<?php $data = array(
-		  'id' =>'id',
-          'name'        => 'name',
-          //'value'          => $this->input->post('studentname'),
-          'class'       => 'form-control',
-          'style'       => 'height:30px',
-          'placeholder' => 'Eg: Thasneem ILM'
-         // 'required' => 'required'
-        );
-     echo form_input($data);   ?> 
-      </div>
+					<div class="form-group">
+					<label>Student Name</label>      
+					<?php $data = array(
+					'id' =>'id',
+					'name'        => 'name',
+					'value'          => $this->input->post('studentname'),
+					'class'       => 'form-control',
+					'style'       => 'height:30px',
+					'placeholder' => 'Eg: Thasneem ILM',
+					'readonly'=>'true'
+					);
+					echo form_input($data);   ?> 
+					</div>
 	 
 	 
 	 
-	  <div class="form-group">
-    <label>Selects Payment Catagory</label>
-    <select class="form-control">
+					<div class="form-group">
+							<label>Selects Payment Catagory</label>
+							<select class="form-control">
 	
-	<?php foreach($payments as $payment): ?>
-    <option value=<?php echo $payment->id;?>><?php echo $payment->name; ?></option>
-	<?php endforeach; ?>
+							<?php foreach($payments as $payment): ?>
+							<option value=<?php echo $payment->id;?>><?php echo $payment->name; ?></option>
+							<?php endforeach; ?>
                                               
-    </select>
-    </div>  
+							</select>
+					</div>  
 	 
 	 
-	 <div class="form-group">
-				<label>Amount</label>      
-				<?php $data = array(
-		  'id' =>'id',
-          'name'        => 'name',
-          //'value'          => $this->input->post('studentname'),
-          'class'       => 'form-control',
-          'style'       => 'height:30px',
-          'placeholder' => 'Eg: 1000'
-         // 'required' => 'required'
-        );
-     echo form_input($data);   ?> 
-      </div>
+					<div class="form-group">
+						<label>Amount</label>      
+						<?php $data = array(
+						'id' =>'id',
+						'name'        => 'name',
+						//'value'          => $this->input->post('studentname'),
+						'class'       => 'form-control',
+						'style'       => 'height:30px',
+						'placeholder' => 'Eg: 1000'
+						// 'required' => 'required'
+						);
+						echo form_input($data);   ?> 
+					</div>
+					
+					<div class="form-group">
+						<label>Special notes on Payments</label>      
+						<?php $data = array(
+						'id' =>'id',
+						'name'        => 'name',
+						//'value'          => $this->input->post('studentname'),
+						'class'       => 'form-control',
+						'style'       => 'height:30px',
+						'placeholder' => 'Eg: 1000'
+						// 'required' => 'required'
+						);
+						echo form_input($data);   ?> 
+					</div>
 	 
-	 <div class="form-group" >
+					<div class="form-group" >
                 
-      <input name="submit" type="submit" class="btn btn-primary" value="Send" />
-      <button type="reset" class="btn btn-primary">Reset</button>
+					<input name="submit" type="submit" class="btn btn-primary" value="Send" />
+					<button type="reset" class="btn btn-primary">Reset</button>
            
-      </div>
+					</div>
 	 
 	 
-      </div> 
+				</div> 
+      
+	   
+					
+	   
+					<?php echo form_close(); ?>	
+            	
+           
+            </div><!-- /.box-body -->
+			
+		</div><!-- /.box -->
+			
+			
+			
+			
+		<div class="row">
+            <div class="col-md-6">
+              <div class="box">
+					<div class="box-header with-border">
+					<h3 class="box-title">Student Details</h3>
+					<div class="box-tools pull-right">
+					<button class="btn btn-box-tool" title="Collapse"></button>
+					<button class="btn btn-box-tool" title="Remove"></button>
+					</div>
+					</div>
+				<div class="box-body">
+            
+					<?php if ($this->session->flashdata('flashSuccess')) { ?>
+						<div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
+						<?php } ?>	
+      
+					<?php if ($this->session->flashdata('flashFail')) { ?>
+					<div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
+					<?php } ?>	
+      
+      
+						<?php $attributes = array("name" => "registerstudentform");
+						echo form_open("Student/registerStudent")?>
+   
+     
+	 
+	 
+					<div class="form-group">
+					<label>Student Name</label>      
+					<?php $data = array(
+					'id' =>'id',
+					'name'        => 'name',
+					'value'          => 'test',
+					'class'       => 'form-control',
+					'style'       => 'height:30px',
+					'placeholder' => 'Eg: Thasneem ILM',
+					 'readonly' => 'true'
+					);
+					echo form_input($data);   ?> 
+					</div>
+	               
+				   
+				     <div class="form-group">
+					<label>Register Number</label>      
+					<?php $data = array(
+					'id' =>'id',
+					'name'        => 'name',
+					'value'          => 'test',
+					'class'       => 'form-control',
+					'style'       => 'height:30px',
+					'placeholder' => 'Eg: Thasneem ILM',
+					 'readonly' => 'true'
+					);
+					echo form_input($data);   ?> 
+					</div>
+	 
+	                 <div class="form-group">
+					<label>Parent Name</label>      
+					<?php $data = array(
+						'id' =>'id',
+					'name'        => 'name',
+					'value'          => 'test',
+					'class'       => 'form-control',
+					'style'       => 'height:30px',
+					'placeholder' => 'Eg: Thasneem ILM',
+					 'readonly' => 'true'
+					);
+					echo form_input($data);   ?> 
+					</div>
+					
+					
+					
+					 <div class="form-group">
+					<label>Payment Category</label>      
+					<?php $data = array(
+						'id' =>'id',
+					'name'        => 'name',
+					'value'          => 'test',
+					'class'       => 'form-control',
+					'style'       => 'height:30px',
+					'placeholder' => 'Eg: Thasneem ILM',
+					 'readonly' => 'true'
+					);
+					echo form_input($data);   ?> 
+					</div> 
+	 
+	 
+					<div class="form-group">
+						<label>Balance To Date</label>      
+						<?php $data = array(
+						'id' =>'id',
+						'name'        => 'name',
+						//'value'          => $this->input->post('studentname'),
+						'class'       => 'form-control',
+						'style'       => 'height:30px',
+						'placeholder' => 'Eg: 1000'
+						// 'required' => 'required'
+						);
+						echo form_input($data);   ?> 
+					</div>
+					
+					
+					<div class="form-group">
+						<label>Special notes on Payments</label>      
+						<?php $data = array(
+						'id' =>'id',
+						'name'        => 'name',
+						//'value'          => $this->input->post('studentname'),
+						'class'       => 'form-control',
+						'style'       => 'height:30px',
+						'placeholder' => 'Eg: 1000'
+						// 'required' => 'required'
+						);
+						echo form_input($data);   ?> 
+					</div>
+	 
+					
+	 
+	 
+				</div> 
       
       
    
@@ -183,30 +331,27 @@
 	  
        
 	   
-	   <input type='text' name='location_search' id='location_search' placeholder='Type Location' >
+					
 	   
-    <?php echo form_close(); ?>	
-            	
-            	
-         	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
+					<?php echo form_close(); ?>	
             	
            
             </div><!-- /.box-body -->
+             
+            </div><!-- /.col -->
+            
+        </div><!-- /.row -->	
+			
+			
+			
+			
            
-          </div><!-- /.box -->
-  </div><!-- /.box -->
-        </section><!-- /.content -->
+         
+ 
+    </section><!-- /.content -->
 
 
-		
+	
 		
 		
 		
