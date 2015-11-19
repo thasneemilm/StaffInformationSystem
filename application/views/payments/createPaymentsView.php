@@ -1,12 +1,5 @@
   
-   <script>
-	 
-	 $(document).ready(function(){
-	$("#submit").click(function(){
-	$("#form").submit();  // jQuey's submit function applied on form.
-	});
-	});
-	</script>     
+     
 
  <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -187,11 +180,18 @@
 				</div><!-- /.box-body -->
             </div><!-- /.box -->
 		</div><!-- /.box -->
-    </section>
+		</section>
 		
 		
 		
-		
+	<script>
+	 
+	 $(document).ready(function(){
+	$("#submit").click(function(){
+	$("#form").submit();  // jQuey's submit function applied on form.
+	});
+	});
+	</script>   	
 		
 		
 		

@@ -11,18 +11,37 @@ class Payments extends MY_Controller {
 		//$this->load->library('Datatables');
        // $this->load->library('table');
         $this->load->database();
+		$this->load->library('Ajax_pagination');
 		//$this -> load -> library('form_validation');
 		//$this -> load -> model('StudentModel');
 		$this -> load -> model('PaymentModel');
+		$this -> load -> model('StudentModel');
 		//$this->load->helper(array('form','url','html','form'));
         //$this->load->library(array('session', 'form_validation', 'email' ,'ion_auth'));
+		$this->load->library("pagination");
+		$this->perPage = 10;
 		}
 	 
 	public function index()
 	{
 		$this->data = array('content'=>'Payments/DoPayments');
-		$this->data['payments'] = $this->PaymentModel->getPaymentRows();
+		$this->data['paymentsCategories'] = $this->PaymentModel->getPaymentRows();
+		$this->data['students'] = $this->StudentModel->getStudentsForPayment();
 		//$this->load->view('masterView', $this->data);
+		
+		$totalRec = count($this->PaymentModel->getRows());
+        
+        //pagination configuration
+        $config['first_link']  = 'First';
+        $config['div']         = 'postList'; //parent div tag id
+        $config['base_url']    = base_url().'index.php/Payments/ajaxSearchPayment';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = 10;
+        
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $this->data['payments'] = $this->PaymentModel->getRows(array('limit'=>$this->perPage));
 		
 		 $this->loadView('Payments/payments_view', $this->data);
 		//$this->load->view('Payments/payments_view', $this->data);
@@ -102,7 +121,105 @@ class Payments extends MY_Controller {
 		} 
 	
 	
+	public function doPayments(){
+		$studentId = $this->input->post('studentId');
+		$paymentCatagoryId =	$this->input->post('paymentCatagoryId');
+		$amount  = $this->input->post('amount');
+		$notes  = $this->input->post('notes');
+		// get the current user 
+		$userId = $this->ion_auth->user()->row()->id;
+		$date = date("Y/m/d");
+		$time = date("h:i:sa");
+		
+		$payment = array(
+			'studentId' => $studentId,
+			'paymentCatagoryId' => $paymentCatagoryId,
+             'amount' => $amount,
+            'notes' => $notes,
+		      'officer' => $userId,
+			   'date' => $date,
+			    'time' => $time
+			  
+			);
+		
+		if($this->PaymentModel->doPayments($payment)==TRUE){
+		
+		echo 'SUCCESS';	
+		//$this->session->set_flashdata('flashSuccess', 'Student Registration Success');
+				
+		}else{
+		
+		echo 'FAILED';
+		//$this->session->set_flashdata('flashFail', 'Payment Made Success');
+				
+		} 
+		
+		
+	  
+		}
+		
+		
+		
+		
+		// Pyamnt history
+		public    function GetStudentPaymentDetails(){
+         
+		 $studentId = $this->input->post('studentId');
+		 
+        $data = $this->PaymentModel->GetPaymentOfStudent($studentId);
+		
+       // $this->loadView('student_view', $this->data);
+	  echo json_encode ($data) ;
+    }
+		
 	
+	
+	function ajaxSearchPayment()
+    {
+       $search=  $this->input->post('search');
+       // if(!$page){
+       //     $offset = 0;
+       // }else{
+       //     $offset = $page;
+      //  }
+        
+        //total rows count
+        $totalRec = count($this->StudentModel->getRows());
+        
+        //pagination configuration
+        $config['first_link']  = 'First';
+       // $config['div']         = 'postList'; //parent div tag id
+        $config['base_url']    = base_url().'index.php/Student/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $this->data['students'] = $this->StudentModel->getStudent($search);
+        
+        //load the view
+       
+	   
+    }
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
    
  }
 		

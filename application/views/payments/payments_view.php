@@ -9,7 +9,8 @@
             /* Autocomplete 
             ----------------------------------*/  
             .ui-autocomplete { position: absolute; cursor: default; }     
-            .ui-autocomplete-loading { background: white url('http://jquery-ui.googlecode.com/svn/tags/1.8.2/themes/flick/images/ui-anim_basic_16x16.gif') right center no-repeat; }*/  
+            .ui-autocomplete-loading { background: white url('http://jquery-ui.googlecode.com/svn/tags/1.8.2/themes/flick/images/ui-anim_basic_16x16.gif') 
+			right center no-repeat; }*/  
    
             /* workarounds */  
             * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */  
@@ -47,10 +48,10 @@
                 margin: -1px;  
             }  
         </style>  
-           
-        <script type="text/javascript">  
+        
+		<script type="text/javascript">  
         $(this).ready( function() {  
-            $("#id").autocomplete({  
+            $("#id2").autocomplete({  
                 minLength: 1,  
                 source:   
                 function(req, add){  
@@ -69,7 +70,7 @@
                 },  
             select:   
                 function(event, ui) {  
-                    $("#result").append(  
+                    $("#name").append(  
                         "<li>"+ ui.item.value + "</li>"  
                     );                    
                 },        
@@ -85,6 +86,7 @@
             Payments
             
           </h1>
+		  
           <ol class="breadcrumb">
             <li><a href="<?php echo base_url();?>"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="<?php echo base_url() ?>index.php/Payments">Payments</a></li>
@@ -95,6 +97,9 @@
         <!-- Main content -->
                <!-- Main content -->
     <section class="content">
+		
+	 <div id="container"></div>
+	 
 		<div class="col-md-6">
           <!-- Default box -->
 			<div class="box">
@@ -106,44 +111,56 @@
 					</div>
 					</div>
 				<div class="box-body">
-            
+           
 					<?php if ($this->session->flashdata('flashSuccess')) { ?>
-						<div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
+						<div id='alert alert-warning'  class="alert alert-info"> 
+							<?= $this->session->flashdata('flashSuccess') ?> </div>
 						<?php } ?>	
       
 					<?php if ($this->session->flashdata('flashFail')) { ?>
-					<div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
+					<div id='alert alert-warning'  class="alert-alert-warning">
+						<?= $this->session->flashdata('flashFail') ?> </div>
 					<?php } ?>	
       
       
-						<?php $attributes = array("name" => "registerstudentform");
-						echo form_open("Student/registerStudent")?>
+						<?php $attributes = array("name" => "registerstudentform", "id" => "doPayments");
+		
+		
+		
+		echo form_open('', $attributes)?>
    
-     
-	 
-	 
 					<div class="form-group">
 					<label>Student Name</label>      
 					<?php $data = array(
-					'id' =>'id',
-					'name'        => 'name',
+					'id' =>'sssssssssssssstudentname',
+					'name'        => 'sssssssstudentname',
 					'value'          => $this->input->post('studentname'),
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
 					'placeholder' => 'Eg: Thasneem ILM',
-					'readonly'=>'true'
+					//'readonly'=>'true'
 					);
-					echo form_input($data);   ?> 
+				//	echo form_input($data);   ?> 
 					</div>
-	 
-	 
+	                
+					
+					<div class="form-group">
+							<label>Student Name</label>
+							<select class="form-control" name="studentname" id="studentId" >
+	
+							<?php foreach($students as $student): ?>
+							<option value=<?php echo $student->id;  ?> > <?php echo $student->name; ?></option>
+							<?php endforeach; ?>
+                                              
+							</select>
+					</div>  
 	 
 					<div class="form-group">
 							<label>Selects Payment Catagory</label>
-							<select class="form-control">
+							<select class="form-control" name="paymentCatagory" id="paymentCatagoryId" >
 	
-							<?php foreach($payments as $payment): ?>
-							<option value=<?php echo $payment->id;?>><?php echo $payment->name; ?></option>
+							<?php foreach($paymentsCategories as $paymentsCategory): ?>
+							<option value=<?php echo $paymentsCategory->id;?>><?php echo $paymentsCategory->name; ?></option>
 							<?php endforeach; ?>
                                               
 							</select>
@@ -153,13 +170,13 @@
 					<div class="form-group">
 						<label>Amount</label>      
 						<?php $data = array(
-						'id' =>'id',
-						'name'        => 'name',
+						'id' =>'amount',
+						'name'        => 'amount',
 						//'value'          => $this->input->post('studentname'),
 						'class'       => 'form-control',
 						'style'       => 'height:30px',
-						'placeholder' => 'Eg: 1000'
-						// 'required' => 'required'
+						'placeholder' => 'Eg: 1000',
+						 'required' => 'required'
 						);
 						echo form_input($data);   ?> 
 					</div>
@@ -167,12 +184,12 @@
 					<div class="form-group">
 						<label>Special notes on Payments</label>      
 						<?php $data = array(
-						'id' =>'id',
-						'name'        => 'name',
+						'id' =>'notes',
+						'name'        => 'notes',
 						//'value'          => $this->input->post('studentname'),
 						'class'       => 'form-control',
 						'style'       => 'height:30px',
-						'placeholder' => 'Eg: 1000'
+						'placeholder' => 'any notes'
 						// 'required' => 'required'
 						);
 						echo form_input($data);   ?> 
@@ -180,20 +197,24 @@
 	 
 					<div class="form-group" >
                 
-					<input name="submit" type="submit" class="btn btn-primary" value="Send" />
+				    <?php echo form_submit('submit', 'Submit', "class='submit'"); ?>
+					
 					<button type="reset" class="btn btn-primary">Reset</button>
+					
+					
            
 					</div>
-	 
-	 
-				</div> 
-      
-	   
-					
-	   
-					<?php echo form_close(); ?>	
+	  			
+      	<?php echo form_close(); ?>	
             	
-           
+				
+				
+				
+				
+				
+				
+				
+           </div> 
             </div><!-- /.box-body -->
 			
 		</div><!-- /.box -->
@@ -205,7 +226,7 @@
             <div class="col-md-6">
               <div class="box">
 					<div class="box-header with-border">
-					<h3 class="box-title">Student Details</h3>
+					<h3 class="box-title">Student Payments Details</h3>
 					<div class="box-tools pull-right">
 					<button class="btn btn-box-tool" title="Collapse"></button>
 					<button class="btn btn-box-tool" title="Remove"></button>
@@ -214,16 +235,18 @@
 				<div class="box-body">
             
 					<?php if ($this->session->flashdata('flashSuccess')) { ?>
-						<div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
+						<div id='alert alert-warning'  class="alert alert-info">
+							<?= $this->session->flashdata('flashSuccess') ?> </div>
 						<?php } ?>	
       
 					<?php if ($this->session->flashdata('flashFail')) { ?>
-					<div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
+					<div id='alert alert-warning'  class="alert-alert-warning"> 
+						<?= $this->session->flashdata('flashFail') ?> </div>
 					<?php } ?>	
       
       
-						<?php $attributes = array("name" => "registerstudentform");
-						echo form_open("Student/registerStudent")?>
+						<?php $attributes = array("name" => "registerstudentform"); ?>
+						
    
      
 	 
@@ -231,27 +254,24 @@
 					<div class="form-group">
 					<label>Student Name</label>      
 					<?php $data = array(
-					'id' =>'id',
-					'name'        => 'name',
-					'value'          => 'test',
+					'id' =>'studentnameP',
+					'name'        => 'studentnameP',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
-					'placeholder' => 'Eg: Thasneem ILM',
-					 'readonly' => 'true'
+					'placeholder' => 'Eg: Thasneem ILM'
+					 
 					);
 					echo form_input($data);   ?> 
 					</div>
 	               
 				   
-				     <div class="form-group">
+				    <div class="form-group">
 					<label>Register Number</label>      
 					<?php $data = array(
-					'id' =>'id',
-					'name'        => 'name',
-					'value'          => 'test',
+					'id' =>'registernumberP',
+					'name'        => 'registernumberP',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
-					'placeholder' => 'Eg: Thasneem ILM',
 					 'readonly' => 'true'
 					);
 					echo form_input($data);   ?> 
@@ -260,8 +280,8 @@
 	                 <div class="form-group">
 					<label>Parent Name</label>      
 					<?php $data = array(
-						'id' =>'id',
-					'name'        => 'name',
+						'id' =>'parentnameP',
+					'name'        => 'parentnameP',
 					'value'          => 'test',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
@@ -276,8 +296,8 @@
 					 <div class="form-group">
 					<label>Payment Category</label>      
 					<?php $data = array(
-						'id' =>'id',
-					'name'        => 'name',
+						'id' =>'paymentcategoryP',
+					'name'        => 'paymentcategoryP',
 					'value'          => 'test',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
@@ -291,8 +311,8 @@
 					<div class="form-group">
 						<label>Balance To Date</label>      
 						<?php $data = array(
-						'id' =>'id',
-						'name'        => 'name',
+						'id' =>'balanceP',
+						'name'        => 'balanceP',
 						//'value'          => $this->input->post('studentname'),
 						'class'       => 'form-control',
 						'style'       => 'height:30px',
@@ -303,22 +323,6 @@
 					</div>
 					
 					
-					<div class="form-group">
-						<label>Special notes on Payments</label>      
-						<?php $data = array(
-						'id' =>'id',
-						'name'        => 'name',
-						//'value'          => $this->input->post('studentname'),
-						'class'       => 'form-control',
-						'style'       => 'height:30px',
-						'placeholder' => 'Eg: 1000'
-						// 'required' => 'required'
-						);
-						echo form_input($data);   ?> 
-					</div>
-	 
-					
-	 
 	 
 				</div> 
       
@@ -333,7 +337,7 @@
 	   
 					
 	   
-					<?php echo form_close(); ?>	
+					
             	
            
             </div><!-- /.box-body -->
@@ -344,28 +348,172 @@
 			
 			
 			
-			
+	
            
-         
+        		<!-- /.row --> 
  
     </section><!-- /.content -->
 
 
 	
+ <section class="content">
+  <div class="col-md-12">
+          <!-- Default box -->
+          <div class="box">
+		<div class="box-header with-border">
+              <h3 class="box-title">Payment Details </h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+            
+             <?php if ($this->session->flashdata('flashSuccess')) { ?>
+        <div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
+    <?php } ?>	
+      
+      <?php if ($this->session->flashdata('flashFail')) { ?>
+        <div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
+    <?php } ?>	
+      
+      
+          <div class="box">
+                <div class="box-header">
+                  
+					 <?php 
+						 echo $this->ajax_pagination->create_links()
+						 ; ?>
+				
+                  <div class="box-tools">
+				  
+                    <div class="input-group" style="width: 300px;">
+                      <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search" name="search" id="search">
+                      <div class="input-group-btn">
+                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body  no-padding">
+                  <table class="table table-striped"id="postList" class="list">
+                    <tr>
+                      <th>Payment Reference</th>
+                      <th>Student Register</th>
+                      <th>Student Name</th>
+                      <th>Payment Category</th>
+					  <th>Amount</th>
+					  <th>Date</th>
+					  <th>Officer</th>
+                    </tr>
+					<div >  
+					
+					
+					
+					
+					<!--?php foreach($this->data['students'] as $student): ?-->
+					<?php foreach($payments as $payment): ?>
+                    <tr>
+                      <td><?php echo $payment->name; ?></td>
+                      <td><?php echo $payment->studentid; ?></td>
+                     
+                      
+                    </tr>
+                    <?php endforeach; ?>
+				
+					
+					
+					
+					</div>
+                  </table>
+				  
+                </div><!-- /.box-body -->
+				
+				
+				
+              </div>
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+           
+            </div><!-- /.box-body -->
+           
+          </div><!-- /.box -->
+  </div><!-- /.box -->
+        </section><!-- /.content -->		
 		
+
+<table border='1' id="display"></table>		
 		
+<script type="text/javascript">
+	
+	
+
+
+
+// Ajax post
+$(document).ready(function() {
+
+$(".submit").click(function(event) {
+event.preventDefault();
+
+var studentId = $("select#studentId").val();
+var amount = $("input#amount").val();
+var paymentCatagoryId = $("select#paymentCatagoryId").val();
+var paymentCatagoryId = $("select#paymentCatagoryId").val();
+var notes = $("input#notes").val();
+jQuery.ajax({
+type: "POST",
+url: "<?php echo base_url(); ?>" + "index.php/Payments/doPayments",
+dataType: 'json',
+data: {amount: amount, studentId: studentId, paymentCatagoryId:paymentCatagoryId, notes:notes },
+success: function(res) {
+ 
+}
+});
+});
+});
+</script>
 		
+
+
+<script type="text/javascript">		
+
+$( "#studentId" ).keyup(function() {
+	$('#registernumberP').val('');
+});	
+	
+$( "#studentId" ).change(function() {
+	$('#registernumberP').val('');
+    studentId = $('#studentId').val();
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "<?php echo base_url(); ?>" + "index.php/Payments/GetStudentPaymentDetails",
+        data: {studentId: studentId},
+        success: function(data) {
+		     
+			$('#registernumberP').val(data.studentId);
+			
+			},
+        error : function(){
+           alert('Some error occurred!');
+        },
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+    });
+});	
+
+</script>
 		
  	
 		

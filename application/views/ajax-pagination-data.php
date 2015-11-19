@@ -27,7 +27,7 @@
                       <ul class="dropdown-menu" role="menu">
                         <li><a href="<?php echo site_url('Student/edit') . '/' . $student -> id; ?>">Edit</a></li>
                         <li><a href="<?php echo site_url('Student/delete') . '/' . $student -> id; ?>">Delete</a></li>
-                        
+                        <li><a  href="<?php echo site_url('Payments'); ?>">Do Payment</a></li>
                       </ul>
                     </div> </td>
                     </tr>

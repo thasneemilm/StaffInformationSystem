@@ -58,8 +58,71 @@ class PaymentModel extends CI_Model {
 
 	
 
-	
+	public function doPayments($data) {
+		if ($this -> db -> insert('students_payments', $data)) {
+			return TRUE;
+		} else {
+		return FALSE;
+		}
+
+	}
 
 	
+	function getStudentPayments(){
+        return  $this->db->select('')
+                ->from('table1 as t1')
+				->where('t1.id', $id)
+                ->join($this->usersTable.' as st','st.id = ht.student_id')
+                ->get();
+        
+    }
+	
+	
+	
+	function getRows($params = array())
+    {
+        $this->db->select('*');
+        $this->db->from('students_payments');
+        //$this->db->order_by('created','desc');
+        
+        if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit'],$params['start']);
+        }elseif(!array_key_exists("start",$params) && array_key_exists("limit",$params)){
+            $this->db->limit($params['limit']);
+        }
+        
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	
+	 function GetPaymentOfStudentw($id) {
+     return $this->db->where('studentId', $id)->get('students_payments');
+     
+  }
+	
+	 function GetPaymentOfStudent($id) {
+     return $this->db->get_where('students_payments', array('studentId' => $id))->row();
+     
+  }
+	
+	public function GetPaymentOfStudentrrrrrr($id){
+				
+		return $this->db->select('students_payments.*,students.*', false)
+         ->from('students_payments as students_payments')
+         ->join('students as students','students.id = students_payments.studentId')
+		 ->where('students_payments.studentId', $id)
+         ->get();		 	
+		
+	}
 
 }

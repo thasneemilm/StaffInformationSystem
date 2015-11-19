@@ -1,6 +1,6 @@
 <?php
 
-class studentmodel extends CI_Model {
+class StudentModel extends CI_Model {
 	function __construct() {
 		// Call the Model constructor
 		parent::__construct();
@@ -285,9 +285,43 @@ class studentmodel extends CI_Model {
   }
  
    
+   function getStudentsForPayment($params = array())
+    {
+        $this->db->select('*');
+        $this->db->from('students');
+        $query = $this->db->get();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
    
-   
-   
+    
+	function GetPaymentOfStudent($params = array())
+    {
+        $this->db->select('*');
+        $this->db->from('students_payments');
+        $query = $this->db->get();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	
    
    
    

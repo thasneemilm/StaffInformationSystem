@@ -293,7 +293,7 @@
     
 	
 	
-    function ajaxPaginationData()
+ /*    function ajaxPaginationData()
     {
         $page=  $this->input->post('page');
        // if(!$page){
@@ -321,7 +321,7 @@
         $this->load->view('ajax-pagination-data', $data, false);
     }
 	
-	
+	 */
 	
 	function ajaxGetStudentSearch()
     {
