@@ -18,7 +18,7 @@
 			$this -> load -> model('CourseModel');
 			$this->load->helper(array('form','url','html'));
 			$this->load->library(array('session', 'form_validation', 'email'));
-			$this->perPage = 7;
+			$this->perPage = 2;
 		}
 		
 		
@@ -277,7 +277,7 @@
         //pagination configuration
         $config['first_link']  = 'First';
         $config['div']         = 'postList'; //parent div tag id
-        $config['base_url']    = base_url().'index.php/Student/ajaxPaginationData';
+        $config['base_url']    = base_url().'index.php/Student/ajaxGetStudentSearch';
         $config['total_rows']  = $totalRec;
         $config['per_page']    = $this->perPage;
         
@@ -325,17 +325,8 @@
 	
 	function ajaxGetStudentSearch()
     {
-       $search=  $this->input->post('search');
-       // if(!$page){
-       //     $offset = 0;
-       // }else{
-       //     $offset = $page;
-      //  }
-        
-        //total rows count
+        $search=  $this->input->post('search');
         $totalRec = count($this->StudentModel->getRows());
-        
-        //pagination configuration
         $config['first_link']  = 'First';
        // $config['div']         = 'postList'; //parent div tag id
         $config['base_url']    = base_url().'index.php/Student/ajaxPaginationData';

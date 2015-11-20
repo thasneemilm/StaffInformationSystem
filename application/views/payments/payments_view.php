@@ -129,19 +129,7 @@
 		
 		echo form_open('', $attributes)?>
    
-					<div class="form-group">
-					<label>Student Name</label>      
-					<?php $data = array(
-					'id' =>'sssssssssssssstudentname',
-					'name'        => 'sssssssstudentname',
-					'value'          => $this->input->post('studentname'),
-					'class'       => 'form-control',
-					'style'       => 'height:30px',
-					'placeholder' => 'Eg: Thasneem ILM',
-					//'readonly'=>'true'
-					);
-				//	echo form_input($data);   ?> 
-					</div>
+				
 	                
 					
 					<div class="form-group">
@@ -206,18 +194,27 @@
 					</div>
 	  			
       	<?php echo form_close(); ?>	
-            	
-				
-				
-				
-				
-				
-				
-				
+         
            </div> 
             </div><!-- /.box-body -->
 			
 		</div><!-- /.box -->
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			
@@ -258,8 +255,7 @@
 					'name'        => 'studentnameP',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
-					'placeholder' => 'Eg: Thasneem ILM'
-					 
+					'readonly' => 'true'
 					);
 					echo form_input($data);   ?> 
 					</div>
@@ -282,7 +278,6 @@
 					<?php $data = array(
 						'id' =>'parentnameP',
 					'name'        => 'parentnameP',
-					'value'          => 'test',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
 					'placeholder' => 'Eg: Thasneem ILM',
@@ -298,11 +293,9 @@
 					<?php $data = array(
 						'id' =>'paymentcategoryP',
 					'name'        => 'paymentcategoryP',
-					'value'          => 'test',
 					'class'       => 'form-control',
 					'style'       => 'height:30px',
-					'placeholder' => 'Eg: Thasneem ILM',
-					 'readonly' => 'true'
+					'readonly' => 'true'
 					);
 					echo form_input($data);   ?> 
 					</div> 
@@ -321,25 +314,9 @@
 						);
 						echo form_input($data);   ?> 
 					</div>
-					
-					
-	 
+				
 				</div> 
       
-      
-   
-      
-       
-      
-      
-	  
-       
-	   
-					
-	   
-					
-            	
-           
             </div><!-- /.box-body -->
              
             </div><!-- /.col -->
@@ -356,101 +333,7 @@
 
 
 	
- <section class="content">
-  <div class="col-md-12">
-          <!-- Default box -->
-          <div class="box">
-		<div class="box-header with-border">
-              <h3 class="box-title">Payment Details </h3>
-              <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body">
-            
-             <?php if ($this->session->flashdata('flashSuccess')) { ?>
-        <div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
-    <?php } ?>	
-      
-      <?php if ($this->session->flashdata('flashFail')) { ?>
-        <div id='alert alert-warning'  class="alert-alert-warning"> <?= $this->session->flashdata('flashFail') ?> </div>
-    <?php } ?>	
-      
-      
-          <div class="box">
-                <div class="box-header">
-                  
-					 <?php 
-						 echo $this->ajax_pagination->create_links()
-						 ; ?>
-				
-                  <div class="box-tools">
-				  
-                    <div class="input-group" style="width: 300px;">
-                      <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search" name="search" id="search">
-                      <div class="input-group-btn">
-                        <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body  no-padding">
-                  <table class="table table-striped"id="postList" class="list">
-                    <tr>
-                      <th>Payment Reference</th>
-                      <th>Student Register</th>
-                      <th>Student Name</th>
-                      <th>Payment Category</th>
-					  <th>Amount</th>
-					  <th>Date</th>
-					  <th>Officer</th>
-                    </tr>
-					<div >  
-					
-					
-					
-					
-					<!--?php foreach($this->data['students'] as $student): ?-->
-					<?php foreach($payments as $payment): ?>
-                    <tr>
-                      <td><?php echo $payment->name; ?></td>
-                      <td><?php echo $payment->studentid; ?></td>
-                     
-                      
-                    </tr>
-                    <?php endforeach; ?>
-				
-					
-					
-					
-					</div>
-                  </table>
-				  
-                </div><!-- /.box-body -->
-				
-				
-				
-              </div>
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-           
-            </div><!-- /.box-body -->
-           
-          </div><!-- /.box -->
-  </div><!-- /.box -->
-        </section><!-- /.content -->		
+ 		
 		
 
 <table border='1' id="display"></table>		
@@ -478,7 +361,7 @@ url: "<?php echo base_url(); ?>" + "index.php/Payments/doPayments",
 dataType: 'json',
 data: {amount: amount, studentId: studentId, paymentCatagoryId:paymentCatagoryId, notes:notes },
 success: function(res) {
- 
+ $('#alert alert-warning').html("data insert successfully").fadeIn('slow')
 }
 });
 });
@@ -495,6 +378,9 @@ $( "#studentId" ).keyup(function() {
 	
 $( "#studentId" ).change(function() {
 	$('#registernumberP').val('');
+	$('#studentnameP').val('');
+	
+	$('#parentnameP').val('');
     studentId = $('#studentId').val();
     $.ajax({
         type: "POST",
@@ -503,6 +389,10 @@ $( "#studentId" ).change(function() {
         data: {studentId: studentId},
         success: function(data) {
 		     
+			$('#studentnameP').val(data.name);
+			$('#registernumberP').val(data.studentId);
+			$('#parentnameP').val(data.parentname);
+			
 			$('#registernumberP').val(data.studentId);
 			
 			},

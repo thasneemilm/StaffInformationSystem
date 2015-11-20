@@ -239,6 +239,7 @@
               <ul class="treeview-menu">
 			   <li><a href="<?php echo base_url() ?>index.php/Payments/createPayments"><i class="fa fa-circle-o"></i>Create Payments</a></li>
                 <li><a href="<?php echo base_url() ?>index.php/Payments/"><i class="fa fa-circle-o"></i>Do Payments</a></li>
+				 <li><a href="<?php echo base_url() ?>index.php/Payments/SearchPayments"><i class="fa fa-circle-o"></i>Search Payments</a></li>
 				</ul>
 				</li>
 			

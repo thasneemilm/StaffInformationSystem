@@ -146,6 +146,9 @@
 							<th>Description</th>
 							<th>Actions</th>
 							</tr>
+							
+							<?php if ($payments) { ?>
+								
 					      <?php foreach($payments as $payment): ?>
                     <tr>
                       
@@ -168,7 +171,7 @@
                     </tr>
                     <?php endforeach; ?>
 						  
-						  
+					<?php } ?>	  
 						  
 						  
 						  

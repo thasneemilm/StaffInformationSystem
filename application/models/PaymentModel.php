@@ -78,11 +78,12 @@ class PaymentModel extends CI_Model {
     }
 	
 	
-	
 	function getRows($params = array())
     {
         $this->db->select('*');
-        $this->db->from('students_payments');
+        $this->db->from('students_payments as students_payments')
+		 ->join('students as students','students.id = students_payments.studentId','left')
+		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left');
         //$this->db->order_by('created','desc');
         
         if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
@@ -105,24 +106,118 @@ class PaymentModel extends CI_Model {
 		
     }
 	
+/* 	function getPayment($search)
+    {
+        $this->db->select('*');
+        $this->db->from('students_payments');
+        
+        $whereCondition = array('studentId' =>$search);
+	    $this->db->like($whereCondition);
+		//$this->db->or_like('phonenumber',$search);
+		//$this->db->or_like('parentname',$search);
+		$this->db->limit(10);
+	//	$this->db->order_by("name", "asc");
+	
+	    
+	
+	
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	 */
+	
+	function getPayment($search)
+    {
+        $this->db->select('students_payments.*,students.*,paymentcatagory.*', false);
+        $this->db->from('students_payments as students_payments')
+		 ->join('students as students','students.id = students_payments.studentId','left')
+		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left');
+		
+		
+        
+        $whereCondition = array('studentId' =>$search);
+	    $this->db->like($whereCondition);
+		$this->db->or_like('name',$search);
+		$this->db->or_like('studentspaymentid',$search);
+		$this->db->or_like('studentId',$search);
+		$this->db->limit(10);
+	//	$this->db->order_by("name", "asc");
+	
+	    
+	
+	
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	
+	
 	 function GetPaymentOfStudentw($id) {
      return $this->db->where('studentId', $id)->get('students_payments');
      
   }
 	
-	 function GetPaymentOfStudent($id) {
+	 function GetPaymentOfStudentrr($id) {
      return $this->db->get_where('students_payments', array('studentId' => $id))->row();
      
   }
 	
-	public function GetPaymentOfStudentrrrrrr($id){
+	public function GetPaymentOfStudent($id){
 				
 		return $this->db->select('students_payments.*,students.*', false)
          ->from('students_payments as students_payments')
-         ->join('students as students','students.id = students_payments.studentId')
+         ->join('students as students','students.id = students_payments.studentId','left')
+		// ->join('paymentcatagory as paymentcatagory','paymentcatagory.id = students_payments.paymentCatagoryId','left')
 		 ->where('students_payments.studentId', $id)
-         ->get();		 	
+         ->get()->row();		 	
 		
 	}
+	
+	
+/* 	public function GetPaymentsOfStudents($id){
+				
+		return $this->db->select('students_payments.*,students.*', false)
+         ->from('students_payments as students_payments')
+         ->join('students as students','students.id = students_payments.studentId','left')
+		// ->join('paymentcatagory as paymentcatagory','paymentcatagory.id = students_payments.paymentCatagoryId','left')
+		 ->where('students_payments.studentId', $id)
+         ->get()->row();		 	
+		
+	}
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
