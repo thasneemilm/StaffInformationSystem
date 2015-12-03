@@ -105,8 +105,8 @@ class Payments extends MY_Controller {
 			$id = $this->input->post('id');
 			//echo $id;
             $payment = array(
-			'id' => $this->input->post('id'),
-			'name' => $this->input->post('paymentname'),
+			'paymentcategoryid' => $this->input->post('id'),
+			'paymentname' => $this->input->post('paymentname'),
              'paymentfrequancy' => $this->input->post('paymentfrequancy'),
             'description' => $this->input->post('description')
 		     

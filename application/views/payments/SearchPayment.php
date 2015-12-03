@@ -119,7 +119,7 @@
                       <th>Student Name</th>
                       <th>Payment Category</th>
 					  <th>Amount</th>
-					 
+					   <th>Officer</th>
 					   <th>Action</th>
                     </tr>
 					<div >  
@@ -134,7 +134,7 @@
                       <td><?php echo $payment->name; ?></td>
 					  <td><?php echo $payment->paymentname; ?></td>
 					  <td><?php echo $payment->amount; ?></td>
-                      <td><?php echo $payment->name; ?></td>
+                      <td><?php echo $payment->user; ?></td>
 					  <td>
 						  <div class="btn-group">
                       <button type="button" class="btn btn-info">Action</button>

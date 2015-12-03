@@ -40,7 +40,7 @@ class PaymentModel extends CI_Model {
 
 	
 	 public function getSinglePayment($id = null) {
-     $this->db->where('id', $id);
+     $this->db->where('paymentcategoryid', $id);
      return $this->db->get('paymentcatagory');
   }
 	
@@ -80,10 +80,11 @@ class PaymentModel extends CI_Model {
 	
 	function getRows($params = array())
     {
-        $this->db->select('*');
+        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user', false);
         $this->db->from('students_payments as students_payments')
 		 ->join('students as students','students.id = students_payments.studentId','left')
-		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left');
+		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left')
+		  ->join('users as users','users.id = students_payments.officer','left');
         //$this->db->order_by('created','desc');
         
         if(array_key_exists("start",$params) && array_key_exists("limit",$params)){
@@ -138,11 +139,11 @@ class PaymentModel extends CI_Model {
 	
 	function getPayment($search)
     {
-        $this->db->select('students_payments.*,students.*,paymentcatagory.*', false);
+        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user', false);
         $this->db->from('students_payments as students_payments')
 		 ->join('students as students','students.id = students_payments.studentId','left')
-		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left');
-		
+		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left')
+			->join('users as users','users.id = students_payments.officer','left');
 		
         
         $whereCondition = array('studentId' =>$search);

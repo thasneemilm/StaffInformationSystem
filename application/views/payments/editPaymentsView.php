@@ -53,7 +53,7 @@
 								<?php $data = array(
 								
 								'name'        => 'id',
-								'value'       => $payment->id,
+								'value'       => $payment->paymentcategoryid,
 								'class'       => 'form-control'
 								);
 								echo form_input($data);   ?> 
@@ -65,7 +65,7 @@
 								<?php $data = array(
 							    
 								'name'        => 'paymentname',
-								'value'          => $payment->name,
+								'value'          => $payment->paymentname,
 								'class'       => 'form-control',
 								'style'       => 'height:30px',
 								'placeholder' => 'Eg: Month'

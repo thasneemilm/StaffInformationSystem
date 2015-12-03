@@ -152,7 +152,7 @@
 					      <?php foreach($payments as $payment): ?>
                     <tr>
                       
-                      <td><?php echo $payment->name; ?></td>
+                      <td><?php echo $payment->paymentname; ?></td>
                        <td><?php echo $payment->paymentfrequancy; ?></td>
 					   <td><?php echo $payment->description; ?></td>
 					   
@@ -163,8 +163,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo site_url('Payments/edit') . '/' . $payment -> id; ?>">Edit</a></li>
-                        <li><a class='deleteUser' href="<?php echo site_url('Payments/delete') . '/' . $payment -> id; ?>">Delete</a></li>
+                        <li><a href="<?php echo site_url('Payments/edit') . '/' . $payment -> paymentcategoryid; ?>">Edit</a></li>
+                        <li><a class='deleteUser' href="<?php echo site_url('Payments/delete') . '/' . $payment -> paymentcategoryid; ?>">Delete</a></li>
                         
                       </ul>
                     </div> </td>

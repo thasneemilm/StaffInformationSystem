@@ -324,7 +324,15 @@ class StudentModel extends CI_Model {
 	
    
    
-   
+   public function insert_profile_image($studentId, $imagename)
+    {
+        $data = array(
+             'imagename'        => $imagename,
+            'studentId'         => $studentId
+        );
+        $this->db->insert('profileimages', $data);
+       // return $this->db->insert_id();
+    }
    
    
    

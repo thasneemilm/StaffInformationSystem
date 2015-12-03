@@ -443,6 +443,102 @@
 		}
 	
 	
+	public function upload_file()
+{
+    $status = "";
+    $msg = "";
+    $file_element_name = 'userfile';
+     
+    if (empty($_POST['title']))
+    {
+        $status = "error";
+        $msg = "Please enter a title";
+    }
+     
+    if ($status != "error")
+    {
+        $config['upload_path'] = './files/';
+        $config['allowed_types'] = 'gif|jpg|png|doc|txt';
+        $config['max_size'] = 1024 * 8;
+        $config['encrypt_name'] = TRUE;
+ 
+        $this->load->library('upload', $config);
+ 
+        if (!$this->upload->do_upload($file_element_name))
+        {
+            $status = 'error';
+            $msg = $this->upload->display_errors('', '');
+        }
+        else
+        {
+            $data = $this->upload->data();
+            $file_id = $this->files_model->insert_file($data['file_name'], $_POST['title']);
+            if($file_id)
+            {
+                $status = "success";
+                $msg = "File successfully uploaded";
+            }
+            else
+            {
+                unlink($data['full_path']);
+                $status = "error";
+                $msg = "Something went wrong when saving the file, please try again.";
+            }
+        }
+        @unlink($_FILES[$file_element_name]);
+    }
+    echo json_encode(array('status' => $status, 'msg' => $msg));
+}
+	
+	
+	
+	
+	
+	
+	public function uploadProfileImage(){
+		//$this->load->view('file_view', array('error' => ' ' ));
+		$this->data['students'] = $this->StudentModel->getStudentsForPayment();
+		$this->loadView('file_view', $this->data);
+
+	}
+	
+	
+	public function do_upload(){
+	$studentId = $this->input->post('studentname');   
+	$config = array(
+	'upload_path' => "./uploads/profileimages",
+	'allowed_types' => "gif|jpg|png|jpeg|pdf",
+	'overwrite' => TRUE,
+	'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+	'max_height' => "768",
+	'max_width' => "1024",
+	'file_name' => $studentId
+	);
+	$this->load->library('upload', $config);
+	if($this->upload->do_upload())
+	{
+
+   
+	$data = array('upload_data' => $this->upload->data());
+	$upload_data = $this->upload->data();
+	$imageName = $file_name = $upload_data['file_name'];
+	$this->StudentModel->insert_profile_image($studentId,$imageName);
+	$this->session->set_flashdata('message',"<div style='color:GREEN;'> Profile Image Added .<div>");
+	redirect('Student/uploadProfileImage', 'refresh');
+	//$this->load->view('upload_success',$data);
+	}
+	else
+	{
+    $this->session->set_flashdata('message',"<div style='color:GREEN;'> Profile Image NOT ADDED .<div>");
+	$error = array('error' => $this->upload->display_errors());
+	//$this->load->view('file_view', $error);
+	redirect('Student/uploadProfileImage', 'refresh');
+	}
+	}
+	
+	
+	
+	
 	
 	
 	
