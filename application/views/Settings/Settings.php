@@ -29,9 +29,9 @@
               <!-- Custom Tabs -->
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-				
+					
                   <li class="active"><a href="#tab_1" data-toggle="tab">General</a></li>
-                  <li><a href="#tab_2" data-toggle="tab">Student</a></li>
+                  <li><a href="#tab_2" data-toggle="tab">Students</a></li>
                   <li><a href="#tab_3" data-toggle="tab">Tab 3</a></li>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -49,85 +49,66 @@
                 </ul>
 				
 				
-                <div class="tab-content">
+            <div class="tab-content">
 				
-                  <div class="tab-pane active" id="tab_1">
-				  
-				  
+					<div class="tab-pane active" id="tab_1">
 					
-					 <div class="col-md-8"> 	
+						<div class="col-md-6"> 	
+							<p class="margin">Application Name</p>
+							<div class="input-group input-group-sm">
+							<input type="text" class="form-control">
+							<span class="input-group-btn">
+							<button class="btn btn-info btn-flat" type="button">Edit</button>
+							</span>
+							</div>
+				        
+						
+						
 					
-               
-               
 				
-				</div>  
+						</div>  
             
 				    
-            </div><!-- /.tab-pane -->
+					</div><!-- /.tab-pane -->
 				  
-				  
-            <div class="tab-pane" id="tab_2">
-				  
-				 
-				  
-					<div class="col-md-8">  
-					<div class="box box-primary">
-					
-					
-               
-               
-                  <div class="box-body">
-                    <div class="form-group">
-                      
-                      
-                    </div>
-                    
-                  </div><!-- /.box-body -->
-                   
-				   <div class="input-group">
-                    <div class="input-group-btn">
-					<label for="exampleInputEmail1">Register Code</label>
-                      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Action <span class="fa fa-caret-down"></span></button>
-                      <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                      </ul>
-                    </div><!-- /btn-group -->
-                    <input type="text" class="form-control">
-                  </div><!-- /input-group -->
-				   
-				   
-				   
-				   
-                 
-                </form>
-				
-				</div>  
-              </div>
-					
-            </div><!-- /.tab-pane -->
-			
-			
+				   <div class="tab-pane" id="tab_2">
+				     	<div class="col-md-6"> 	
+							<p class="margin">Student Register Code1</p>
+							<div class="input-group input-group-sm">
+							<input type="text" class="form-control">
+							<span class="input-group-btn">
+							<button class="btn btn-info btn-flat" type="button">Edit</button>
+							</span>
+							</div>
+				        
+							
+							<p class="margin">Student Register Code2</p>
+							<div class="input-group input-group-sm">
+							<input type="text" class="form-control">
+							<span class="input-group-btn">
+							<button class="btn btn-info btn-flat" type="button">Edit</button>
+							</span>
+							</div>
+				        
+						</div> 
+					 
+                  </div><!-- /.tab-pane -->
+            
 			
                   <div class="tab-pane" id="tab_3">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                    sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                    like Aldus PageMaker including versions of Lorem Ipsum.
+				     	
+                    
+					 
                   </div><!-- /.tab-pane -->
 				  
 				  
 				  
 				  
-                </div><!-- /.tab-content -->
-              </div><!-- nav-tabs-custom -->
-            </div><!-- /.col -->
+            </div><!-- /.tab-content -->
+			
+			
+          </div><!-- nav-tabs-custom -->
+        </div><!-- /.col -->
 
             
           </div> <!-- /.row -->

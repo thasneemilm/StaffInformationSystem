@@ -54,7 +54,9 @@
 								
 								'name'        => 'id',
 								'value'       => $payment->paymentcategoryid,
-								'class'       => 'form-control'
+								'class'       => 'form-control',
+								'required'       => 'true',
+								'readonly'    => 'true'
 								);
 								echo form_input($data);   ?> 
 							</div>

@@ -18,7 +18,7 @@
 			$this -> load -> model('CourseModel');
 			$this->load->helper(array('form','url','html'));
 			$this->load->library(array('session', 'form_validation', 'email'));
-			$this->perPage = 2;
+			$this->perPage = 10;
 		}
 		
 		
@@ -31,68 +31,7 @@
 		$this->loadView('student_add', $this->data);		
 		}
 		
-		
-		
-/* 		public function search_student2()
-		{
-			
-		$config = array();
-		// $config['base_url'] = $base_url;
-       // $config['base_url'] = $base_url."Student/search_student";;
-        $config['total_rows'] = $this->StudentModel->record_student_count();
-        $config['per_page'] = 5; 
-		$config["uri_segment"] = 3;
-		$config['base_url'] = site_url('Student/search_student');
-		
-		$config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = false;
-        $config['last_link'] = false;
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link'] = '&laquo';
-        $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link'] = '&raquo';
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        $base_url= site_url('teachers/index');
-        $this -> pagination -> initialize($config);
-		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		$this->data["students"] = $this->StudentModel->fetch_students($config["per_page"], $page);
-        $this->data["links"] = $this->pagination->create_links();
 
-        $this->loadView("student_search", $this->data);		
-		}
-
-		
-		public function get_pagination($base_url,$total_rows,$start,$limit) {
-
-        $this -> load -> library('pagination');
-        $config = array();
-        $config['base_url'] = $base_url;
-        $config['total_rows'] = $total_rows;
-        $config['per_page'] = $limit; 
-        $config['next_link'] = 'Next page';   
-        $config['next_tag_open'] = '<div class="next-page">';
-        $config['next_tag_close'] = '</div>';
-        $config['prev_link'] = 'Prev page'; 
-        $config['prev_tag_open'] = '<div class="prev-page">'; 
-        $config['prev_tag_close'] = '</div>';
-        $this -> pagination -> initialize($config);
-        return $this -> pagination -> create_links();
-		} 
-		
-		
-		
-*/
-		
 		public function registerStudent()
 		{   
 		   $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -293,7 +232,7 @@
     
 	
 	
- /*    function ajaxPaginationData()
+    function ajaxGetStudentSearch()
     {
         $page=  $this->input->post('page');
        // if(!$page){
@@ -321,9 +260,9 @@
         $this->load->view('ajax-pagination-data', $data, false);
     }
 	
-	 */
+	 
 	
-	function ajaxGetStudentSearch()
+  	function ajaxGetStudentSearch2()
     {
         $search=  $this->input->post('search');
         $totalRec = count($this->StudentModel->getRows());
@@ -491,7 +430,7 @@
 }
 	
 	
-	
+	//http://localhost/CodeIgniter3Tests/uploads/profileimages/1001.jpg
 	
 	
 	
@@ -502,9 +441,25 @@
 
 	}
 	
+	public function getProfileImage(){
+	     $studentId = $this->input->get('studentId');
+		 $this->data['student'] = $this->StudentModel->getProfileImageName($studentId);
+		 if(!$student=null){
+		  echo $student->imagename;
+			 } else {
+			   echo 'No Images Found';
+			 }
+		
+		 //echo $studentId;
+	    // echo base_url().'uploads/profileimages/'.$row->imagename;
+		 
 	
-	public function do_upload(){
-	$studentId = $this->input->post('studentname');   
+		}
+	
+	
+	public function do_uploadw(){
+	$studentId = $this->input->post('studentname');  
+	echo $studentId;
 	$config = array(
 	'upload_path' => "./uploads/profileimages",
 	'allowed_types' => "gif|jpg|png|jpeg|pdf",
@@ -529,7 +484,7 @@
 	}
 	else
 	{
-    $this->session->set_flashdata('message',"<div style='color:GREEN;'> Profile Image NOT ADDED .<div>");
+    $this->session->set_flashdata('message',"<div style='color:RED;'> Profile Image NOT ADDED .<div>");
 	$error = array('error' => $this->upload->display_errors());
 	//$this->load->view('file_view', $error);
 	redirect('Student/uploadProfileImage', 'refresh');
@@ -537,6 +492,42 @@
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+public function do_upload(){
+	$studentId = $this->input->post('studentname'); 
+	//echo $studentId;
+$config = array(
+'upload_path' => "./uploads/profileimages/",
+'allowed_types' => "gif|jpg|png|jpeg|pdf",
+'overwrite' => TRUE,
+'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+'max_height' => "768",
+'max_width' => "1024"
+);
+$this->load->library('upload', $config);
+
+if($this->upload->do_upload())
+{
+
+$this->data = array('upload_data' => $this->upload->data());
+$file_name = $upload_data['file_name'];
+echo $imageName;
+echo $file_name;
+$this->StudentModel->insert_profile_image($studentId,$imageName);
+$this->load->view('message',$this->data);
+}
+else
+{
+$error = array('error' => $this->upload->display_errors());
+$this->load->view('message', $error);
+}
+}
 	
 	
 	

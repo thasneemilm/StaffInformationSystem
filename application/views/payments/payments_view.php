@@ -127,7 +127,7 @@
 		
 		
 		
-		echo form_open('', $attributes)?>
+		echo form_open('Payments/doPayments', $attributes)?>
    
 				
 	                
@@ -148,7 +148,7 @@
 							<select class="form-control" name="paymentCatagory" id="paymentCatagoryId" >
 	
 							<?php foreach($paymentsCategories as $paymentsCategory): ?>
-							<option value=<?php echo $paymentsCategory->id;?>><?php echo $paymentsCategory->name; ?></option>
+							<option value=<?php echo $paymentsCategory->paymentcategoryid;?>><?php echo $paymentsCategory->paymentname; ?></option>
 							<?php endforeach; ?>
                                               
 							</select>
@@ -376,7 +376,7 @@ $( "#studentId" ).keyup(function() {
 	$('#registernumberP').val('');
 });	
 	
-$( "#studentId" ).change(function() {
+$( "#studentIdr" ).change(function() {
 	$('#registernumberP').val('');
 	$('#studentnameP').val('');
 	

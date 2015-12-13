@@ -26,7 +26,10 @@ class Settings extends MY_Controller {
 		 $this->loadView('Settings/Settings', $this->data);
 		
 	}
- 
+     
+	 
+	 
+	 
   
  }
 		

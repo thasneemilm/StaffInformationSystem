@@ -335,10 +335,43 @@ class StudentModel extends CI_Model {
     }
    
    
+   public function getProfileImageName2($studentId){
+	   // $this->db->where('studentId', $studentId);
+		//$query = $this->db->get('profileimages');
+		//return $query->result();
+		
+	return	$this->db->get_where('profileimages', array('studentId' => $studentId));
+	       // ->row();
+		
+		
+		
+	   }
    
    
-   
-   
+   function getProfileImageName($studentId)
+    {
+        $this->db->select('*');
+        $this->db->from('profileimages');
+        
+        $whereCondition = array('studentId' =>$studentId);
+	   // $this->db->like($whereCondition);
+		//$this->db->or_like('name',$search);
+		//$this->db->or_like('parentname',$search);
+		//$this->db->limit(5);
+		//$this->db->order_by("name", "asc");
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
    
    
    

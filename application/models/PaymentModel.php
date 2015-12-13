@@ -47,12 +47,12 @@ class PaymentModel extends CI_Model {
 	
 	
 	function update($id, $data) {
-		$this -> db -> where('id', $id);
+		$this -> db -> where('	paymentcategoryid', $id);
 		$this -> db -> update('paymentcatagory', $data);
 	}
 
 	function delete($id) {
-		$this -> db -> where('id', $id);
+		$this -> db -> where('paymentcategoryid', $id);
 		$this -> db -> delete('paymentcatagory');
 	}
 
@@ -80,7 +80,7 @@ class PaymentModel extends CI_Model {
 	
 	function getRows($params = array())
     {
-        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user', false);
+        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user, students_payments.amount as amount, students_payments.date as pdate, students_payments.time as ptime', false);
         $this->db->from('students_payments as students_payments')
 		 ->join('students as students','students.id = students_payments.studentId','left')
 		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left')
@@ -139,7 +139,7 @@ class PaymentModel extends CI_Model {
 	
 	function getPayment($search)
     {
-        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user', false);
+        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user, students_payments.amount as amount, students_payments.date as pdate, students_payments.time as ptime', false);
         $this->db->from('students_payments as students_payments')
 		 ->join('students as students','students.id = students_payments.studentId','left')
 		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left')
@@ -208,7 +208,14 @@ class PaymentModel extends CI_Model {
 	
 	
 	
-	
+	public function doStudentPayment($data) {
+		if ($this -> db -> insert('students_payments', $data)) {
+			return TRUE;
+		} else {
+		return FALSE;
+		}
+
+	}
 	
 	
 	

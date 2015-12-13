@@ -70,7 +70,7 @@ class Payments extends MY_Controller {
 		$description = $this->input->post('description');
 		
 		$data = array(
-			'name'   =>  $paymentname,
+			'paymentname'   =>  $paymentname,
 			'paymentfrequancy'   =>  $paymentfrequancy,
 			'description'   =>  $description
 			);
@@ -209,17 +209,17 @@ class Payments extends MY_Controller {
         $totalRec = count($this->PaymentModel->getRows());
         $config['first_link']  = 'First';
        // $config['div']         = 'postList'; //parent div tag id
-        $config['base_url']    = base_url().'index.php/Student/ajaxGetPaymentSearch';
+        $config['base_url']    = base_url().'index.php/payments/ajaxGetPaymentSearch';
         $config['total_rows']  = $totalRec;
         $config['per_page']    = $this->perPage;
         
         $this->ajax_pagination->initialize($config);
         
         //get the posts data
-        $data['payments'] = $this->PaymentModel->getPayment($search);
-        
+        $this->data['payments'] = $this->PaymentModel->getPayment($search);
+       // $this->data['payments'] = $this->PaymentModel->getRows(array('limit'=>$this->perPage)); 
         //load the view
-        $this->load->view('Payments/ajax-pagination-search-payment', $data, false);
+        $this->load->view('Payments/ajax-pagination-search-payment', $this->data, false);
 	   //echo json_encode ($data) ;
     }	
 		

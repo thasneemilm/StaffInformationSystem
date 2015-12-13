@@ -120,6 +120,8 @@
                       <th>Payment Category</th>
 					  <th>Amount</th>
 					   <th>Officer</th>
+					   <th>Date</th>
+					   <th>Time</th>
 					   <th>Action</th>
                     </tr>
 					<div >  
@@ -135,6 +137,8 @@
 					  <td><?php echo $payment->paymentname; ?></td>
 					  <td><?php echo $payment->amount; ?></td>
                       <td><?php echo $payment->user; ?></td>
+					  <td><?php echo $payment->pdate; ?></td>
+					  <td><?php echo $payment->ptime; ?></td>
 					  <td>
 						  <div class="btn-group">
                       <button type="button" class="btn btn-info">Action</button>

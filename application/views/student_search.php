@@ -7,7 +7,7 @@
 		if($("#search").val().length>1){
 		$.ajax({
 			type: "post",
-			url: "http://localhost/CodeIgniter3Tests/index.php/Student/ajaxGetStudentSearch",
+			url: "http://localhost/CodeIgniter3Tests/index.php/Student/ajaxGetStudentSearch2",
 			cache: false,				
 			data:'search='+$("#search").val(),
 			success: function(response){
