@@ -127,7 +127,7 @@ class Payments extends MY_Controller {
 	
 	
 	public function doPayments(){
-		$studentId = $this->input->post('studentId');
+    	$studentId = $this->input->post('studentname');
 		$paymentCatagoryId =	$this->input->post('paymentCatagoryId');
 		$amount  = $this->input->post('amount');
 		$notes  = $this->input->post('notes');
@@ -135,7 +135,7 @@ class Payments extends MY_Controller {
 		$userId = $this->ion_auth->user()->row()->id;
 		$date = date("Y/m/d");
 		$time = date("h:i:sa");
-		
+	//	echo $studentId;
 		$payment = array(
 			'studentId' => $studentId,
 			'paymentCatagoryId' => $paymentCatagoryId,
@@ -146,10 +146,16 @@ class Payments extends MY_Controller {
 			    'time' => $time
 			  
 			);
+		  $paymentId = $this->PaymentModel->doPayments($payment);
+		  
+		if(!$paymentId=null){
 		
-		if($this->PaymentModel->doPayments($payment)==TRUE){
+		 $this->data['student'] = $this->StudentModel->getSingleStudent2($studentId)->row();
+		$this->data['payments'] = $this->PaymentModel->getPayment($paymentId);
 		
-		echo 'SUCCESS';	
+		
+		 $this->loadView('Payments/Recipt', $this->data, false);
+		//echo 'SUCCESS';	
 		//$this->session->set_flashdata('flashSuccess', 'Student Registration Success');
 				
 		}else{
@@ -225,18 +231,7 @@ class Payments extends MY_Controller {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	
    
  }
 		

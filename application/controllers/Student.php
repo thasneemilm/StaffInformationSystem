@@ -438,6 +438,7 @@
 		//$this->load->view('file_view', array('error' => ' ' ));
 		$this->data['students'] = $this->StudentModel->getStudentsForPayment();
 		$this->loadView('file_view', $this->data);
+		
 
 	}
 	
@@ -457,51 +458,7 @@
 		}
 	
 	
-	public function do_uploadw(){
-	$studentId = $this->input->post('studentname');  
-	echo $studentId;
-	$config = array(
-	'upload_path' => "./uploads/profileimages",
-	'allowed_types' => "gif|jpg|png|jpeg|pdf",
-	'overwrite' => TRUE,
-	'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
-	'max_height' => "768",
-	'max_width' => "1024",
-	'file_name' => $studentId
-	);
-	$this->load->library('upload', $config);
-	if($this->upload->do_upload())
-	{
-
-   
-	$data = array('upload_data' => $this->upload->data());
-	$upload_data = $this->upload->data();
-	$imageName = $file_name = $upload_data['file_name'];
-	$this->StudentModel->insert_profile_image($studentId,$imageName);
-	$this->session->set_flashdata('message',"<div style='color:GREEN;'> Profile Image Added .<div>");
-	redirect('Student/uploadProfileImage', 'refresh');
-	//$this->load->view('upload_success',$data);
-	}
-	else
-	{
-    $this->session->set_flashdata('message',"<div style='color:RED;'> Profile Image NOT ADDED .<div>");
-	$error = array('error' => $this->upload->display_errors());
-	//$this->load->view('file_view', $error);
-	redirect('Student/uploadProfileImage', 'refresh');
-	}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 public function do_upload(){
-	$studentId = $this->input->post('studentname'); 
-	//echo $studentId;
 $config = array(
 'upload_path' => "./uploads/profileimages/",
 'allowed_types' => "gif|jpg|png|jpeg|pdf",
@@ -511,26 +468,17 @@ $config = array(
 'max_width' => "1024"
 );
 $this->load->library('upload', $config);
-
 if($this->upload->do_upload())
 {
-
-$this->data = array('upload_data' => $this->upload->data());
-$file_name = $upload_data['file_name'];
-echo $imageName;
-echo $file_name;
-$this->StudentModel->insert_profile_image($studentId,$imageName);
-$this->load->view('message',$this->data);
+$data = array('upload_data' => $this->upload->data());
+$this->load->view('message',$data);
 }
 else
 {
 $error = array('error' => $this->upload->display_errors());
 $this->load->view('message', $error);
 }
-}
-	
-	
-	
+}	
 	
 	
 	

@@ -145,7 +145,7 @@
 	 
 					<div class="form-group">
 							<label>Selects Payment Catagory</label>
-							<select class="form-control" name="paymentCatagory" id="paymentCatagoryId" >
+							<select class="form-control" name="paymentCatagoryId" id="paymentCatagoryId" >
 	
 							<?php foreach($paymentsCategories as $paymentsCategory): ?>
 							<option value=<?php echo $paymentsCategory->paymentcategoryid;?>><?php echo $paymentsCategory->paymentname; ?></option>
@@ -347,7 +347,7 @@
 // Ajax post
 $(document).ready(function() {
 
-$(".submit").click(function(event) {
+$(".submitt").click(function(event) {
 event.preventDefault();
 
 var studentId = $("select#studentId").val();

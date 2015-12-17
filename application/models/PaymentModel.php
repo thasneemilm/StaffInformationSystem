@@ -52,17 +52,19 @@ class PaymentModel extends CI_Model {
 	}
 
 	function delete($id) {
+	
 		$this -> db -> where('paymentcategoryid', $id);
 		$this -> db -> delete('paymentcatagory');
+
 	}
 
 	
 
 	public function doPayments($data) {
 		if ($this -> db -> insert('students_payments', $data)) {
-			return TRUE;
+			return  $insert_id = $this->db->insert_id();;
 		} else {
-		return FALSE;
+		return null;
 		}
 
 	}
@@ -171,6 +173,40 @@ class PaymentModel extends CI_Model {
 		
     }
 	
+	function getPaymentSingle($search)
+    {
+        $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user, students_payments.amount as amount, students_payments.date as pdate, students_payments.time as ptime', false);
+        $this->db->from('students_payments as students_payments')
+		 ->join('students as students','students.id = students_payments.studentId','left')
+		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left')
+			->join('users as users','users.id = students_payments.officer','left');
+		
+        
+        $whereCondition = array('	studentspaymentid' =>$search);
+	    $this->db->like($whereCondition);
+		
+	//	$this->db->order_by("name", "asc");
+	
+	    
+	
+	
+        $query = $this->db->get()->row();
+        
+       
+        return $query;
+		
+		
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	 function GetPaymentOfStudentw($id) {
      return $this->db->where('studentId', $id)->get('students_payments');
@@ -193,7 +229,16 @@ class PaymentModel extends CI_Model {
 		
 	}
 	
-	
+	public function GetPaymentOfStudent2($id){
+				
+		return $this->db->select('students_payments.*,students.*,students_payments.	studentspaymentid as paymentid', false)
+         ->from('students_payments as students_payments')
+         ->join('students as students','students.id = students_payments.studentId','left')
+		// ->join('paymentcatagory as paymentcatagory','paymentcatagory.id = students_payments.paymentCatagoryId','left')
+		 ->where('students_payments.studentId', $id)
+         ->get()->row();		 	
+		
+	}
 /* 	public function GetPaymentsOfStudents($id){
 				
 		return $this->db->select('students_payments.*,students.*', false)
