@@ -59,3 +59,5 @@ $route['Student/datatable'] = "Student/datatable";
 $route['welcome'] = 'Welcome';
 $route['Posts'] = 'Posts';
 
+$route['Student/search_student'] = "Student/searchAdvance";
+

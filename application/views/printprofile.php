@@ -27,8 +27,8 @@
             </div>
             <div class="box-body">
             
-              <?php if ($this->session->flashdata('flashSuccess')) { ?>
-        <div id='alert alert-warning'  class="alert alert-info"> <?= $this->session->flashdata('flashSuccess') ?> </div>
+             <?php if ($this->session->flashdata('message')) { ?>
+        <div> <?= $this->session->flashdata('message') ?> </div>
     <?php } ?>	
       
       <?php if ($this->session->flashdata('flashFail')) { ?>
@@ -37,21 +37,9 @@
             
 		
       
- <?php echo form_open_multipart('upload/do_upload');?>
+ <?php echo form_open_multipart('Student/printprofile');?>
 	
-	       <div class="box-body box-profile">
-		   
-		   
-		   
-     <div id="image_preview"> <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url(); ?>assets/AdminLTE-2.3.0/dist/img/avatar.png" id="previewing" alt="User profile picture"></div>
-                  <h3 class="profile-username text-center">Nina Mcintire</h3>
-                  
-
-				  
-                 
-
-                  
-                </div><!-- /.box-body -->
+	     
 	
 	<div class="form-group">
 			<label>Student Name</label>
@@ -64,18 +52,67 @@
 							</select>
 </div>
 	        
-		   
-		   
-	<div id="selectImage">
-		<label>Select Your Image</label><br/>
-<input type="file" name="userfile" id="file" required />
+	
+	  <div class="form-group">
+	  <label>Select the Fields</label>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="name" checked>
+                          Name
+                        </label>
+                      </div>
 
-</div>	   
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="namewithinitial">
+                          Name with Initial
+                        </label>
+                      </div>
+
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="nicnumber">
+                          Nic Number
+                        </label>
+                      </div>
+					  
+					  <div class="checkbox">
+                        <label>
+                          <input type="checkbox"name="age">
+                          Age
+                        </label>
+                      </div>
+
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Date Of Birth
+                        </label>
+                      </div>
+
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Cinvil status
+                        </label>
+                      </div>
+					  
+					  <div class="checkbox">
+                        <label>
+                          <input type="checkbox">
+                          Phone Number
+                        </label>
+                      </div>
+					  
+					  
+         </div>
+		   
+	   
 		   
  
   
 					
-					<input type="submit" name="submit" value="Upload" class="btn btn-info" />
+					<input type="submit" name="submit" value="Submit" class="btn btn-info" />
  
 <?php echo "</form>"?>
             	
@@ -116,7 +153,7 @@ $(document).ready(function (e) {
 // Function to preview image after validation
 $(function() {
 	
-$("#studentId").change(function() {
+$("#studentIdw").change(function() {
 var studentId = $('#studentId').val();
 
 $("#message").empty();

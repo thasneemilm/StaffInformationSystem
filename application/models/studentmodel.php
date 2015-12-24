@@ -193,7 +193,7 @@ class StudentModel extends CI_Model {
         $whereCondition = array('name' =>$search);
 	    $this->db->like($whereCondition);
 		$this->db->or_like('phonenumber',$search);
-		$this->db->or_like('parentname',$search);
+		//$this->db->or_like('parentname',$search);
 		$this->db->limit(10);
 		$this->db->order_by("name", "asc");
         $query = $this->db->get();
@@ -209,6 +209,136 @@ class StudentModel extends CI_Model {
 		
 		
     }
+	
+	
+	function getStudentAdvance($branchId,$districtId,$serviceId,$designationId)
+    {  
+	  
+	  
+	 /*   $this->db->select('students_payments.*,students.*,paymentcatagory.*, users.username as user, students_payments.amount as amount, students_payments.date as pdate, students_payments.time as ptime', false);
+        $this->db->from('students_payments as students_payments')
+		 ->join('students as students','students.id = students_payments.studentId','left')
+		  ->join('paymentcatagory as paymentcatagory','paymentcatagory.paymentcategoryid = students_payments.paymentCatagoryId','left')
+		  ->join('users as users','users.id = students_payments.officer','left');
+	
+	
+	
+	 */
+	
+	
+	
+	
+	
+        $this->db->select('students.*, districts.dname as dname,designations.dgname as dgname,service.sname as sname,branch.bname as bname');
+         $this->db->from('students as students')
+		 ->join('districts as districts','districts.id = students.District','left')
+		  ->join('branch as branch','branch.id = students.Branch','left')
+		  ->join('service as service','service.id = students.Service','left')
+		 ->join('designations as designations','designations.id = students.designation','left') ;
+        
+	 	if($branchId>0){
+			$whereCondition = array('Branch' =>$branchId);
+			 $this->db->like($whereCondition);
+			}
+		
+       // $whereCondition = array('name' =>$search);
+	    
+		if($districtId>0){
+			$whereCondition = array('District' =>$districtId);
+			 $this->db->like($whereCondition);
+			}
+		
+		
+		if($serviceId>0){
+			$whereCondition = array('Service' =>$serviceId);
+			 $this->db->like($whereCondition);
+			}
+		
+		
+		if($designationId>0){
+			$whereCondition = array('designation' =>$designationId);
+			$this->db->like($whereCondition);
+			}
+		 
+		 
+		
+		
+		
+		//$this->db->or_like('phonenumber',$search);
+		//$this->db->or_like('parentname',$search);
+		$this->db->limit(10);
+		$this->db->order_by("name", "asc");
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	
+	
+	
+	function getStudentAdvance2($search)
+    {
+        $this->db->select('students.*, districts.dname as dname,designations.dgname as dgname,service.sname as sname,branch.bname as bname');
+         $this->db->from('students as students')
+		 ->join('districts as districts','districts.id = students.District','left')
+		  ->join('branch as branch','branch.id = students.Branch','left')
+		  ->join('service as service','service.id = students.Service','left')
+		 ->join('designations as designations','designations.id = students.designation','left') ;
+        
+        $whereCondition = array('name' =>$search);
+	    $this->db->like($whereCondition);
+		$this->db->or_like('phonenumber',$search);
+		$this->db->or_like('address',$search);
+		$this->db->limit(10);
+		$this->db->order_by("name", "asc");
+        $query = $this->db->get();
+        
+        //return ($query->num_rows() > 0)?$query->result_array():FALSE;
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	function getStudentForPayment($search)
@@ -267,6 +397,7 @@ class StudentModel extends CI_Model {
   }
    
    public function getSingleStudent2($id = null) {
+   
      $this->db->where('id', $id);
      return $this->db->get('students');
   }
@@ -280,9 +411,11 @@ class StudentModel extends CI_Model {
    
    
     public function remove($id) {
+	
     $this->db->where('id', $id);
     $this->db->delete('students');
-  }
+	
+	}
  
    
    function getStudentsForPayment($params = array())
@@ -374,7 +507,81 @@ class StudentModel extends CI_Model {
     }
    
    
+   function getDesignation()
+    {
+        $this->db->select('*');
+        $this->db->from('designations');
+        $query = $this->db->get();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
    
+   
+    function getService()
+    {
+        $this->db->select('*');
+        $this->db->from('service');
+        $query = $this->db->get();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+   
+   
+   
+   function getDistricts()
+    {
+        $this->db->select('*');
+        $this->db->from('districts');
+        $query = $this->db->get();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+   
+   
+   function getBranches()
+    {
+        $this->db->select('*');
+        $this->db->from('branch');
+        $query = $this->db->get();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
    
 	
 }

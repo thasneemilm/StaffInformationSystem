@@ -27,6 +27,10 @@
 		
 		
 		$this->data['registernumber'] = $this->StudentModel->getNextRegisterNumber();	
+		$this->data['designation'] = $this->StudentModel->getDesignation();
+		$this->data['Services'] = $this->StudentModel->getService();
+		$this->data['Districts'] = $this->StudentModel->getDistricts();
+		$this->data['Branches'] = $this->StudentModel->getBranches();
 		
 		$this->loadView('student_add', $this->data);		
 		}
@@ -34,48 +38,75 @@
 
 		public function registerStudent()
 		{   
-		   $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+		 //  $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 		//$this->form_validation->set_rules('registernumber', 'Register Number', '|required|min_length[5]|max_length[20]|numeric', array('numeric' => 'Insert A numeric vlaue'));
-			$this->form_validation->set_rules('studentname', 'Student Name', 'trim|required|min_length[5]|max_length[20]|alpha');
-			$this->form_validation->set_rules('parentname', 'Parent Name', 'trim|required|min_length[5]|max_length[20]|alpha');
-			$this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[5]|max_length[20]|alpha');
-			$this->form_validation->set_rules('phonenumber', 'Phone Number', 'numeric|required|min_length[10]|max_length[10]');
+			//$this->form_validation->set_rules('studentname', 'Student Name', 'trim|required|min_length[5]|max_length[20]|alpha');
+			//$this->form_validation->set_rules('parentname', 'Parent Name', 'trim|required|min_length[5]|max_length[20]|alpha');
+		//	$this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[5]|max_length[20]|alpha');
+		//	$this->form_validation->set_rules('phonenumber', 'Phone Number', 'numeric|required|min_length[10]|max_length[10]');
 			
 			//$this->StudentModel->getNextRegisterNumber();
 			
 			
-			 if ($this->form_validation->run() == FALSE) {
-				$this->data['registernumber'] = $this->StudentModel->getNextRegisterNumber();	
-				 $this->loadView('student_add', $this->data);
-			} 
+			// if ($this->form_validation->run() == FALSE) {
+			//	$this->data['registernumber'] = $this->StudentModel->getNextRegisterNumber();	
+			//	 $this->loadView('student_add', $this->data);
+			//} 
 			
-			else {
+			//else {
 			
 			$registernumber = $this->StudentModel->getNextRegisterNumber();	
 			//$registernumber = $this->input->post('registernumber');
-			$studentname = $this->input->post('studentname');
-			$parentname = $this->input->post('parentname');
+			$name = $this->input->post('name');
+			$name_with_initial = $this->input->post('namewithinitial');
+			$nicnumber = $this->input->post('nicnumber');
+			$dateofbirth = $this->input->post('dateofbirth');
+			$age = $this->input->post('age');
 			$address = $this->input->post('address');
 			$phonenumber = $this->input->post('phonenumber');
+			$civilstatus = $this->input->post('civilstatus');
+			
+			
+			
+			$district = $this->input->post('district');
+			$service = $this->input->post('service');
+			$designation = $this->input->post('designation');
+			
+			$branch = $this->input->post('branch');
+			//$civilstatus = $this->input->post('civilstatus');
+			
+			
 			//$$classeType = $this->input->post('$classeType');
 			
 			$data2 = array(
-			//'id'  =>  $registernumber,
-			'name'   =>  $studentname,
-			'parentname'   =>  $parentname,
+			'id'  =>  $registernumber,
+			'name'   =>  $name,
+			'name_with_initial'   =>  $name_with_initial,
 			'address'   =>  $address,
-			'phonenumber'   =>  $phonenumber
-			// 'classeType'   =>  $$classeType
+			'phonenumber'   =>  $phonenumber,
+			 'nicnumber'   =>  $nicnumber,
+			  'dateofbirth'   =>  $dateofbirth,
+			   'civilstatus'   =>  $civilstatus,
+			      'age'   =>  $age,
+				'designation'   =>  $designation,
+			   'Service'   =>  $service,
+			      'District'   =>  $district, 
+				  'Branch'   =>  $branch
+				  
+				  
+				  
+				  
+			   
 			);
 					if($this->StudentModel->addnewStudents($data2)!=null){
 						$this->session->set_flashdata('flashSuccess', 'Student Registration Success');
 						redirect('Student' );
 					}else{
 						//echo $this->StudentModel->addnewStudents($data);
-						$this->session->set_flashdata('flashDanger','Student Registration Fail');
+						$this->session->set_flashdata('flashFail','Student Registration Fail');
 					}
 			
-			}
+			//}
 			
 			
 			
@@ -188,7 +219,7 @@
 				echo '<br>';
 				       
 			}
-        }
+			}
 		
 		}	
 		 */
@@ -281,7 +312,24 @@
         $this->load->view('ajax-pagination-data', $data, false);
     }
 	
-	
+	function ajaxGetStudentSearch3()
+    {
+        $search=  $this->input->post('search');
+        $totalRec = count($this->StudentModel->getRows());
+        $config['first_link']  = 'First';
+       // $config['div']         = 'postList'; //parent div tag id
+        $config['base_url']    = base_url().'index.php/Student/ajaxPaginationData';
+        $config['total_rows']  = $totalRec;
+        $config['per_page']    = $this->perPage;
+        
+        $this->ajax_pagination->initialize($config);
+        
+        //get the posts data
+        $data['students'] = $this->StudentModel->getStudentAdvance2($search);
+        
+        //load the view
+        $this->load->view('ajax-pagination-data', $data, false);
+    }
 	
 	
 	function ajaxGetStudentSearchForPayment()
@@ -305,7 +353,10 @@
 
 	
 	public    function edit($id){
-       
+       	$this->data['designation'] = $this->StudentModel->getDesignation();
+		$this->data['Services'] = $this->StudentModel->getService();
+		$this->data['Districts'] = $this->StudentModel->getDistricts();
+		$this->data['Branches'] = $this->StudentModel->getBranches();
         $this->data['student'] = $this->StudentModel->getSingleStudent2($id)->row();
         $this->loadView('student_view', $this->data);
     }
@@ -332,25 +383,31 @@
 			//} else {
 			
 			
-			try {
+			
 				
 				$id = $this->input->post('id');
 				//echo $id;
 				$student = array(
 				'name' => $this->input->post('name'),
-				'parentname' => $this->input->post('parentname'),
-					'address' => $this->input->post('address'),
-				'phonenumber' => $this->input->post('phonenumber')
+			//	'parentname' => $this->input->post('parentname'),
+				'address' => $this->input->post('address'),
+				'phonenumber' => $this->input->post('phonenumber'),
+				'name_with_initial' => $this->input->post('name_with_initial'),
+				'nicnumber' => $this->input->post('nicnumber'),
+				'civilstatus' => $this->input->post('civilstatus'),
+				'designation' => $this->input->post('designation'),
+				'age' => $this->input->post('age'),
+				'Service' => $this->input->post('Service'),
+				'District' => $this->input->post('District'),
+				'Branch' => $this->input->post('Branch'),
+				'gender' => $this->input->post('gender'),
+				'designation' => $this->input->post('designation'),
 				);
 				$this->StudentModel->update($id,$student);
 			
 				redirect('Student/search_student');
 				
-				} catch (Exception $e) {
-				//alert the user then kill the process
-					var_dump($e->getMessage());
-				}
-			
+				
 			
 			
 				
@@ -368,9 +425,15 @@
 	        $id = $this->uri->segment(3);
 			//$id = $this->input->post('id');
 			
-            $this->StudentModel->remove($id);
+            if($this->StudentModel->remove($id)){
+			    $this->session->set_flashdata('flashSuccess', 'Student Deletion Success');
+				redirect('Student/search_student');
+				} else {
+				$this->session->set_flashdata('flashFail', 'You Cannot delete this record');
+				redirect('Student/search_student');
+				}
 			
-			redirect('Student/search_student');
+			
 		} 
 	
 	public function removeAjax($id){
@@ -443,7 +506,7 @@
 	}
 	
 	public function getProfileImage(){
-	     $studentId = $this->input->get('studentId');
+	     $studentId = $this->input->get('studentname');
 		 $this->data['student'] = $this->StudentModel->getProfileImageName($studentId);
 		 if(!$student=null){
 		  echo $student->imagename;
@@ -481,10 +544,69 @@ $this->load->view('message', $error);
 }	
 	
 	
+	public function forprint(){
+		
+		$this->data['students'] = $this->StudentModel->getStudentsForPayment();
+		$this->loadView('printprofile', $this->data);
+		
+		}
 	
 	
+	public function printprofile(){
 	
 	
+	    $studentId = $this->input->post('studentId');
+		
+		$name = $this->input->post('name');
+		$nicnumber = $this->input->post('nicnumber');
+		$namewithinitial = $this->input->post('namewithinitial');
+		
+		if($nicnumber=='on'){
+		echo 'done';
+			}
+		//echo $name;
+		//echo $nicnumber;
+		//echo $namewithinitial;
+		//echo $nicnumber;
+		//echo 'done';
+		
+		}
+	
+	
+	public function searchAdvance(){
+	
+	    $this->data['designation'] = $this->StudentModel->getDesignation();
+		$this->data['Services'] = $this->StudentModel->getService();
+		$this->data['Districts'] = $this->StudentModel->getDistricts();
+		$this->data['Branches'] = $this->StudentModel->getBranches(); 
+	 	 $this->data['students'] = $this->StudentModel->getRows(array('limit'=>$this->perPage));	
+		$this->loadView('searchAdvance', $this->data);
+		}
+	
+	
+	public function getSearchResults(){
+		$branchId = $this->input->post('branchId');
+		$districtId =	$this->input->post('districtId');
+		$serviceId  = $this->input->post('serviceId');
+		$designationId  = $this->input->post('designationId');
+		
+		
+		//echo '$serviceId';
+	//	echo $serviceId ;
+		
+		
+		$data['students'] = $this->StudentModel->getStudentAdvance($branchId,$districtId,$serviceId,$designationId);
+		
+	$this->load->view('ajax-pagination-data', $data, false);
+		
+		
+		
+		}
+		
+		
+		
+		
+		
 	
 	}
 		

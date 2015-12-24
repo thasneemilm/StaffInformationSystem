@@ -7,7 +7,7 @@
 		if($("#search").val().length>1){
 		$.ajax({
 			type: "post",
-			url: "http://localhost/CodeIgniter3Tests/index.php/Student/ajaxGetStudentSearch2",
+			url: "http://localhost/SIS/index.php/Student/ajaxGetStudentSearch2",
 			cache: false,				
 			data:'search='+$("#search").val(),
 			success: function(response){
@@ -73,7 +73,7 @@
           <!-- Default box -->
           <div class="box">
 		<div class="box-header with-border">
-              <h3 class="box-title">Student Details</h3>
+              <h3 class="box-title">Employee Details</h3>
               <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -110,7 +110,7 @@
                     <tr>
                       <th>Register Number</th>
                       <th>Name</th>
-                      <th>Parent Name</th>
+                     
                       <th>Phone</th>
 					  <th>Address</th>
 					   <th>Actions</th>
@@ -125,7 +125,7 @@
                     <tr>
                       <td><?php echo $student->id; ?></td>
                       <td><?php echo $student->name; ?></td>
-                       <td><?php echo $student->parentname; ?></td>
+                      
                       <td><?php echo $student->phonenumber; ?></td>
 					   <td><?php echo $student->address; ?></td>
                        <td > <div class="btn-group">

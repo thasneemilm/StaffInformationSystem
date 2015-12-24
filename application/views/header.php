@@ -8,20 +8,49 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-  
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/dist/css/AdminLTE.min.css">
-	 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/dist/css/skins/_all-skins.min.css">
-	
+   
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/datepicker.css">
+	
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/daterangepicker/daterangepicker-bs3.css">
+	
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/iCheck/all.css">
+	
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/colorpicker/bootstrap-colorpicker.min.css">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/timepicker/bootstrap-timepicker.min.css">
+	
+	    <link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/select2/select2.min.css">
+	
+	
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- daterange picker -->
+
+	
+	
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/dist/css/AdminLTE.min.css">
+	 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.css">
+	  <link rel="stylesheet" href="<?php echo base_url() ?>assets/AdminLTE-2.3.0/dist/css/skins/_all-skins.min.css">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
@@ -215,12 +244,14 @@
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-dashboard"></i> <span>Student</span> <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-dashboard"></i> <span>Employee</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url() ?>index.php/Student"><i class="fa fa-circle-o"></i> Add New</a></li>
 				 <li><a href="<?php echo base_url() ?>index.php/Student/uploadProfileImage"><i class="fa fa-circle-o"></i>Profile Image</a></li>
                 <li><a href="<?php echo base_url() ?>index.php/Student/search_student"><i class="fa fa-circle-o"></i> Search</a></li>
+				<li><a href="<?php echo base_url() ?>index.php/Student/forprint"><i class="fa fa-circle-o"></i> Print</a></li>
+				<li><a href="<?php echo base_url() ?>index.php/Student/advancedSearch"><i class="fa fa-circle-o"></i> Print</a></li>
               </ul>
             </li>
             

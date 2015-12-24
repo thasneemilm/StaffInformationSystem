@@ -180,17 +180,19 @@
     <!-- jQuery 2.1.4 -->
    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>-->
    
-   <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-   
-   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> 
+  
 	
 	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	
-    
-    <!-- Bootstrap 3.3.5 -->
+	<!-- Bootstrap 3.3.5 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> 
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+   <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+   
+  
+   
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/bootstrap/js/bootstrap.min.js"></script>
     <!-- SlimScroll -->
-    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+   
     <!-- FastClick -->
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/fastclick/fastclick.min.js"></script>
     <!-- AdminLTE App -->
@@ -199,6 +201,34 @@
     <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/dist/js/demo.js"></script>
 	
 	
+    <!-- Bootstrap 3.3.5 -->
+   
+    <!-- Select2 -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/select2/select2.full.min.js"></script>
+    <!-- InputMask -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/input-mask/jquery.inputmask.extensions.js"></script>
+    <!-- date-range-picker -->
+  
+	
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- bootstrap color picker -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <!-- bootstrap time picker -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <!-- SlimScroll 1.3.0 -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/plugins/fastclick/fastclick.min.js"></script>
+	
+	 <script src="<?php echo base_url() ?>assets/AdminLTE-2.3.0/dist/js/app.min.js"></script>
+    <!-- AdminLTE App -->
+  
+    <!-- AdminLTE for demo purposes -->
+   
 	
 	
   </body>
