@@ -547,9 +547,66 @@ $this->load->view('message', $error);
 	public function forprint(){
 		
 		$this->data['students'] = $this->StudentModel->getStudentsForPayment();
+		$this->data['uni'] = $this->StudentModel->getuni();
 		$this->loadView('printprofile', $this->data);
 		
+		
+	}	
+		
+		
+		
+	
+	
+	
+	    public function getdepa(){
+		
+		
+		$uni=  $this->input->post('designationId');
+		//$this->data['departments'] =  $this->StudentModel->getdepa($uni);
+		 //$this->data['departments'] =  $this->StudentModel->getdepa($uni);
+		 echo json_encode($this->StudentModel->getdepa($uni));
+		 
+		 
+		// header('Content-Type: application/x-json; charset=utf-8');
+		// echo(json_encode($this->StudentModel->getdepa($this->data)));
+        // echo(json_encode($this->StudentModel->getdepa($uni)));
+		// $this->load->view('departments', $this->data);		
+		
 		}
+	
+	
+	 public function getlect(){
+		
+		
+		$id=  $this->input->post('id');
+		//$this->data['lectures'] = $this->StudentModel->getlect($department);
+		//$uni=  $this->input->post('designationId');
+		// header('Content-Type: application/x-json; charset=utf-8');
+       //  echo(json_encode($this->StudentModel->getdepa($uni)));
+	   // $this->load->view('letures', $this->data);	
+		 echo json_encode($this->StudentModel->getlect($id));
+		
+		
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public function printprofile(){
@@ -569,6 +626,8 @@ $this->load->view('message', $error);
 		//echo $namewithinitial;
 		//echo $nicnumber;
 		//echo 'done';
+		$this->loadView('profile', $this->data);
+		
 		
 		}
 	

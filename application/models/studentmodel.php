@@ -583,5 +583,155 @@ class StudentModel extends CI_Model {
 		
     }
    
+   
+      public function insertBranch($branchname, $description)
+    {
+        $data = array(
+             'bname'        => $branchname,
+            'description'         => $description
+        );
+		
+		if($this->db->insert('branch', $data))
+		{
+    // Code here after successful insert
+		return TRUE;   // to the controller
+		} 
+		
+       // $this->db->insert('branch', $data);
+       // return $this->db->insert_id();
+    }
+   
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 function getuni()
+    {
+        $this->db->select('*');
+        $this->db->from('uni');
+        $query = $this->db->get();
+        
+        
+		
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+		
+		
+    }
+   
+   
+    function getdepa($uniId)
+    {   
+	    $arrays = array('uniID' => $uniId);
+
+	
+        $this->db->select('*');
+        $this->db->from('depa');
+		$this->db->where($arrays);
+        $query = $this->db->get();
+      
+	  
+	  //return $query;
+        
+		 //$depas = array();
+           $arr = array();
+            if($query->result()) {
+                foreach ($query->result() as $d) {
+                    //$depas[$d->id] = $d->name;
+					// $depas[] = $d;
+					$arr[] = array('id' => $d->id, 'name' => $d->name);
+                }
+                return $arr;
+            } else {
+                return FALSE;
+            }
+		
+		
+		//$arr[] = array('label' => $row['site_name'], 'value' => $row['id']);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		 
+    }
+   
+   
+    function getlect($depId)
+    {    
+	    $arrays = array('depId' => $depId);
+        $this->db->select('*');
+        $this->db->from('lect');
+		$this->db->where($arrays);
+        $query = $this->db->get();
+		
+		 $arr = array();
+        
+        
+		if ($query->num_rows() > 0) {
+            foreach ($query->result() as $d) {
+                //$data[] = $row;
+				$arr[] = array('id' => $d->id, 'name' => $d->name);
+            }
+            return $arr;
+        }
+        return false;
+		
+		
+    }
+   
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	  
 }

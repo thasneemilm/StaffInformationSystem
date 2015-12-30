@@ -251,10 +251,109 @@
 		</div>
       
       
-      
-      
-      
-      
+	  
+	  
+	  <div class="form-group">
+	            <label>
+						
+                      Academic Qualification
+                    </label>     
+				   
+				    <label>
+                      <input type="button"  class="flat-red" id="addolevel" name="academicqualification" value="OL"> 
+					 
+					  
+					  <input type="button"  class="flat-red" id="addalevel" name="academicqualification" value="AL"> 
+					  
+					   <input type="button"  class="flat-red" id="adddegree" name="academicqualification" value="Degree">
+					   
+					    <input type="button"  class="flat-red" id="addpgde" name="academicqualification" value="Post Garaduate">
+					 
+                    </label>
+				   
+                   
+                   
+                  
+        </div>
+	
+	<div class="form-group" id="olelevel">
+		
+		 <div class="box-body pad">
+                  <form>
+                    <textarea class="textarea" placeholder="Place some text here ol " style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </form>
+                </div>
+	
+     </div> 
+	 
+	 
+	 
+	 <div class="form-group" id="alelevel">
+		
+		 <div class="box-body pad">
+                  <form>
+                    <textarea class="textarea" placeholder="Place some text here al " style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </form>
+                </div>
+	
+     </div> 
+	 
+	  <div class="form-group" id="degree">
+		
+		 <div class="box-body pad">
+                  <form>
+                    <textarea class="textarea" placeholder="Place some text here degree " style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </form>
+                </div>
+	
+     </div> 
+	 
+	   <div class="form-group" id="pgde">
+		
+		 <div class="box-body pad">
+                  <form>
+                    <textarea class="textarea" placeholder="Place some text here pgde" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                  </form>
+                </div>
+	
+     </div> 
+	 
+	 
+	 
+	 
+	 
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	  <div class="form-group">
                 
       <input name="submit" type="submit" class="btn btn-primary" value="Send" />
@@ -263,25 +362,128 @@
       </div>
             
     <?php echo form_close(); ?>	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-           	
-            	
-            	
-            	
-            	
-           
+        
             </div><!-- /.box-body -->
            
           </div><!-- /.box -->
   </div><!-- /.box -->
         </section><!-- /.content -->
+
 		
+		
+<script type="text/javascript">
+	
+
+
+
+ $(document).ready(function() {
+             $("#alelevel").hide();
+             $("#olelevel").hide();
+			  $("#degree").hide();
+			   $("#pgde").hide();
+			 
+            $("#addolevel").click(function(){
+              
+                $("#olelevel").show(); 
+				$("#alelevel").hide();
+			    $("#degree").hide();
+			   $("#pgde").hide();
+				  
+
+            });
+			
+			 $("#addalevel").click(function(){
+                
+             $("#olelevel").hide();
+                $("#alelevel").show(); 
+				 
+				 $("#degree").hide();
+			   $("#pgde").hide();
+
+            });
+			
+			 $("#adddegree").click(function(){
+                
+               
+				 $("#alelevel").hide(); 
+				 $("#olelevel").hide(); 
+				 $("#degree").show(); 
+				  $("#pgde").hide();
+                
+				
+
+            });
+			
+			
+			 $("#addpgde").click(function(){
+                
+               
+				 $("#alelevel").hide(); 
+				 $("#olelevel").hide(); 
+                 $("#degree").hide(); 
+				 $("#pgde").show(); 
+				
+
+            });
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+           
+        });
+
+
+
+
+ </script>	
+		
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
  <script>
       $(function () {
@@ -346,30 +548,3 @@
       });
     </script>		
 		
-<script>
-	$(function() {
-	$('#upload_file').submit(function(e) {
-		e.preventDefault();
-		$.ajaxFileUpload({
-			url 			:'./upload/upload_file/', 
-			secureuri		:false,
-			fileElementId	:'userfile',
-			dataType		: 'json',
-			data			: {
-				'title'				: $('#title').val()
-			},
-			success	: function (data, status)
-			{
-				if(data.status != 'error')
-				{
-					$('#files').html('<p>Reloading files...</p>');
-					refresh_files();
-					$('#title').val('');
-				}
-				alert(data.msg);
-			}
-		});
-		return false;
-	});
-});
-</script>
